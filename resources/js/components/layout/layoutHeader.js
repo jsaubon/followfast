@@ -20,11 +20,11 @@ const LayoutHeader = () => {
                 defaultOpenKeys={[]}
                 // className="pull-left"
             >
-                <Menu.Item key="/clients">
-                    <Link to="/clients">Clients</Link>
+                <Menu.Item key="/files">
+                    <Link to="/files">Files</Link>
                 </Menu.Item>
-                <Menu.Item key="/reports">
-                    <Link to="/reports">Reports</Link>
+                <Menu.Item key="/users">
+                    <Link to="/users">Users</Link>
                 </Menu.Item>
                 <Menu.SubMenu
                     title=""
