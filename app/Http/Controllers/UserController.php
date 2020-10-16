@@ -12,9 +12,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::orderBy('id','desc')->get();
+        $role = $request->role;
+        $users = User::where('role',$role)->orderBy('id','desc')->get();
 
         return response()->json([
             'success' => true,

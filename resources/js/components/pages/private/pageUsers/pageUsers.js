@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchData } from "../../../axios";
+import { fetchData } from "../../../../axios";
 import {
     notification,
     Button,
@@ -34,7 +34,7 @@ const PageUsers = () => {
     }, []);
 
     const getUsers = () => {
-        fetchData("GET", "api/user").then(res => {
+        fetchData("GET", "api/user?role=Admin").then(res => {
             // console.log("res", res);
             setUsersList(res.data);
         });
@@ -104,7 +104,7 @@ const PageUsers = () => {
                             >
                                 Edit
                             </Button>
-                            {userdata.role != "Staff" && (
+                            {userdata.role != "Artist" && (
                                 <Button
                                     size="small"
                                     type="primary"
@@ -134,7 +134,11 @@ const PageUsers = () => {
     const [formSaveLoading, setFormSaveLoading] = useState(false);
 
     const submitForm = e => {
-        let data = { ...e, active: e.active == "Active" ? 1 : 0 };
+        let data = {
+            ...e,
+            active: e.active == "Active" ? 1 : 0,
+            role: "Admin"
+        };
         let url = "api/user";
         if (e.id) {
             url = url + "/" + e.id;
@@ -158,7 +162,7 @@ const PageUsers = () => {
     return (
         <div>
             <Title levle={4}>Users</Title>
-            {userdata.role != "Staff" && (
+            {userdata.role != "Artist" && (
                 <Button
                     type="primary"
                     onClick={e => toggleShowModalAddEditUser()}
@@ -240,50 +244,46 @@ const PageUsers = () => {
                             <Input name="password" type="password" />
                         </Form.Item>
 
-                        {userdata.role != "Artist" && (
-                            <>
-                                <Form.Item
-                                    label="Role"
-                                    name="role"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: "Select Role"
-                                        }
-                                    ]}
-                                    className="mb-15"
-                                >
-                                    <Select name="role">
-                                        <Select.Option value="Admin">
-                                            Admin
-                                        </Select.Option>
-                                        <Select.Option value="Artist">
-                                            Artist
-                                        </Select.Option>
-                                    </Select>
-                                </Form.Item>
-                                <Form.Item
-                                    label="Status"
-                                    name="active"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: "Select Status"
-                                        }
-                                    ]}
-                                    className="mb-15"
-                                >
-                                    <Select name="active">
-                                        <Select.Option value="Active">
-                                            Active
-                                        </Select.Option>
-                                        <Select.Option value="Inactive">
-                                            Inactive
-                                        </Select.Option>
-                                    </Select>
-                                </Form.Item>
-                            </>
-                        )}
+                        <Form.Item
+                            label="Role"
+                            name="role"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Select Role"
+                                }
+                            ]}
+                            className="mb-15"
+                        >
+                            <Select name="role">
+                                <Select.Option value="Admin">
+                                    Admin
+                                </Select.Option>
+                                <Select.Option value="Artist">
+                                    Artist
+                                </Select.Option>
+                            </Select>
+                        </Form.Item>
+                        <Form.Item
+                            label="Status"
+                            name="active"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Select Status"
+                                }
+                            ]}
+                            className="mb-15"
+                        >
+                            <Select name="active">
+                                <Select.Option value="Active">
+                                    Active
+                                </Select.Option>
+                                <Select.Option value="Inactive">
+                                    Inactive
+                                </Select.Option>
+                            </Select>
+                        </Form.Item>
                     </Form>
                 </Modal>
             )}

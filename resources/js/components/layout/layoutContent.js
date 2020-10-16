@@ -3,7 +3,8 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { Layout, Breadcrumb } from "antd";
 import LayoutHeader from "./LayoutHeader";
 import LayoutFooter from "./LayoutFooter";
-import PageUsers from "../pages/private/pageUsers";
+import PageUsers from "../pages/private/pageUsers/pageUsers";
+import PageArtists from "../pages/private/pageArtists/pageArtists";
 
 const LayoutContent = () => {
     const { Content } = Layout;
@@ -20,9 +21,10 @@ const LayoutContent = () => {
                     style={{ padding: 24, minHeight: 380 }}
                 >
                     <Switch>
+                        <Route exact path="/artists" component={PageArtists} />
                         <Route exact path="/users" component={PageUsers} />
                         <Route path="/" exact>
-                            <Redirect to="/users" />
+                            <Redirect to="/artists" />
                         </Route>
                     </Switch>
                 </div>
