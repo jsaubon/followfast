@@ -63,7 +63,7 @@ const Login = () => {
                                     marginTop: "20px"
                                 }}
                             >
-                                <Title level={3}>File Inventory System</Title>
+                                <Title level={3}>FollowFast</Title>
                                 <Text type="secondary">
                                     Sign In to your account
                                 </Text>
