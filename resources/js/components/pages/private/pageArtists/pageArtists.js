@@ -10,10 +10,11 @@ import {
     Card,
     Modal,
     Input,
-    Form
+    Form,
+    Avatar
 } from "antd";
 import Title from "antd/lib/typography/Title";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, UserOutlined } from "@ant-design/icons";
 import moment from "moment";
 import ButtonGroup from "antd/lib/button/button-group";
 import ModalAddEditArtist from "./modalAddEditArtist";
@@ -36,7 +37,7 @@ const PageArtists = () => {
 
     const getArtists = () => {
         fetchData("GET", "api/user?role=Artist").then(res => {
-            // console.log("res", res);
+            console.log("res", res);
             setArtistsList(res.data);
         });
     };
@@ -54,7 +55,7 @@ const PageArtists = () => {
 
     const columns = [
         {
-            title: "Name",
+            title: "Artist Name",
             dataIndex: "name",
             key: "name"
         },
@@ -64,9 +65,20 @@ const PageArtists = () => {
             key: "email"
         },
         {
-            title: "Role",
-            dataIndex: "role",
-            key: "role"
+            title: "Song To Display",
+            dataIndex: "song_title",
+            key: "song_title",
+            render: (text, record) => {
+                return (
+                    <>
+                        <Avatar
+                            src={`${window.location.origin}/${record.artist.song_image}`}
+                            shape="square"
+                        />{" "}
+                        {record.artist.song_title}
+                    </>
+                );
+            }
         },
         {
             title: "Status",
@@ -95,17 +107,10 @@ const PageArtists = () => {
                             <Button
                                 size="small"
                                 type="primary"
-                                icon={<EditOutlined />}
-                                onClick={e =>
-                                    toggleShowModalAddEditArtist({
-                                        ...record,
-                                        active: record.active
-                                            ? "Active"
-                                            : "Inactive"
-                                    })
-                                }
+                                icon={<UserOutlined />}
+                                onClick={e => {}}
                             >
-                                Edit
+                                Profile
                             </Button>
                             {userdata.role != "Artist" && (
                                 <Button
@@ -159,6 +164,7 @@ const PageArtists = () => {
                     showModalAddEditArtist={showModalAddEditArtist}
                     toggleShowModalAddEditArtist={toggleShowModalAddEditArtist}
                     selectedArtist={selectedArtist}
+                    getArtists={getArtists}
                 />
             )}
         </div>

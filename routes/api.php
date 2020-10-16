@@ -23,4 +23,7 @@ Route::middleware('auth:api')->group(function () {
     // Route::get('user', 'PassportController@details');
 
     Route::apiResource('user','UserController');
+    Route::apiResource('artist','ArtistController');
+    Route::apiResource('artist_account','ArtistAccountController');
+    Route::apiResource('artist_social','ArtistSocialController');
 });

@@ -243,7 +243,7 @@ const PageUsers = () => {
                         >
                             <Input name="password" type="password" />
                         </Form.Item>
-
+                        {/* 
                         <Form.Item
                             label="Role"
                             name="role"
@@ -263,7 +263,7 @@ const PageUsers = () => {
                                     Artist
                                 </Select.Option>
                             </Select>
-                        </Form.Item>
+                        </Form.Item> */}
                         <Form.Item
                             label="Status"
                             name="active"

@@ -38,4 +38,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+    public function artist() {
+        return $this->hasOne('\App\Artist','user_id');
+    }
+
 }

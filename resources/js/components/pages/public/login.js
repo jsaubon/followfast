@@ -42,7 +42,7 @@ const Login = () => {
                 className="site-layout"
                 style={{ padding: "0 50px", marginTop: 64, height: "100vh" }}
             >
-                <Row>
+                <Row id="login_layout">
                     <Col xs={0} md={6}></Col>
                     <Col xs={24} md={12}>
                         <div

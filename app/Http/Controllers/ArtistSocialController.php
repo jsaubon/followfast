@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\ArtistSocial;
 use Illuminate\Http\Request;
-use App\User;
 
-class UserController extends Controller
+class ArtistSocialController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,19 +14,11 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $role = $request->role;
-        $users = User::where('role',$role);
-        if($role == 'Artist') {
-            $users->with(['artist' => function($q) {
-                $q->with(['artist_account','artist_social']);
-            }]);
-        }
-
-        $users = $users->orderBy('id','desc')->get();
+        $artist_socials = ArtistSocial::orderBy('id','desc')->get();
 
         return response()->json([
             'success' => true,
-            'data' => $users
+            'data' => $artist_socials
         ],200);
     }
 
@@ -39,22 +31,20 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|min:3',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
+            'artist_id' => 'required',
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'active' => true,
-            'role' => $request->role
+        $artist_social = ArtistSocial::create([
+            'artist_id' => $request->artist_id,
+            'instagram' => $request->instagram,
+            'facebook' => $request->facebook,
+            'twitter' => $request->twitter,
+            'youtube' => $request->youtube
         ]);
 
         return response()->json([
             'success' => true,
-            'data' => $user
+            'data' => $artist_social
         ],200);
     }
 
@@ -66,19 +56,19 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
+        $artist_social = ArtistSocial::find($id);
 
 
-        if (!$user) {
+        if (!$artist_social) {
             return response()->json([
                 'success' => false,
-                'message' => 'Product with id ' . $id . ' not found'
+                'message' => 'Artist Socials with id ' . $id . ' not found'
             ], 400);
         }
 
         return response()->json([
             'success' => true,
-            'data' => $user
+            'data' => $artist_social
         ],200);
     }
 
@@ -91,26 +81,26 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
+        $artist_social = ArtistSocial::find($id);
 
-        if (!$user) {
+        if (!$artist_social) {
             return response()->json([
                 'success' => false,
-                'message' => 'User with id ' . $id . ' not found'
+                'message' => 'Artist Socials with id ' . $id . ' not found'
             ], 400);
         }
 
-        $updated = $user->fill($request->all())->save();
+        $updated = $artist_social->fill($request->all())->save();
 
         if ($updated)
             return response()->json([
                 'success' => true,
-                'data' => $user
+                'data' => $artist_social
             ],200);
         else
             return response()->json([
                 'success' => false,
-                'message' => 'User could not be updated'
+                'message' => 'Artist Socials could not be updated'
             ], 500);
     }
 
@@ -122,23 +112,23 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
+        $artist_social = ArtistSocial::find($id);
 
-        if (!$user) {
+        if (!$artist_social) {
             return response()->json([
                 'success' => false,
-                'message' => 'User with id ' . $id . ' not found'
+                'message' => 'Artist Socials with id ' . $id . ' not found'
             ], 400);
         }
 
-        if ($user->delete()) {
+        if ($artist_social->delete()) {
             return response()->json([
                 'success' => true
             ],200);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'User could not be deleted'
+                'message' => 'Artist Socials could not be deleted'
             ], 500);
         }
     }

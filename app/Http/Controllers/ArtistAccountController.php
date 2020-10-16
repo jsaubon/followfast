@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\ArtistAccount;
 use Illuminate\Http\Request;
-use App\User;
 
-class UserController extends Controller
+class ArtistAccountController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,19 +14,11 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $role = $request->role;
-        $users = User::where('role',$role);
-        if($role == 'Artist') {
-            $users->with(['artist' => function($q) {
-                $q->with(['artist_account','artist_social']);
-            }]);
-        }
-
-        $users = $users->orderBy('id','desc')->get();
+        $artist_accounts = ArtistAccount::orderBy('id','desc')->get();
 
         return response()->json([
             'success' => true,
-            'data' => $users
+            'data' => $artist_accounts
         ],200);
     }
 
@@ -39,22 +31,27 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|min:3',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
+            'artist_id' => 'required',
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'active' => true,
-            'role' => $request->role
+        $artist_account = ArtistAccount::create([
+            'artist_id' => $request->artist_id,
+            'spotify_id' => $request->spotify_id,
+            'apple_id' => $request->apple_id,
+            'itunes_id' => $request->itunes_id,
+            'google_id' => $request->google_id,
+            'amazon_id' => $request->amazon_id,
+            'tidal_id' => $request->tidal_id,
+            'Deezer_id' => $request->Deezer_id,
+            'microsoft_id' => $request->microsoft_id,
+            'napster_id' => $request->napster_id,
+            'shazam_id' => $request->shazam_id,
+            'iheartradio_id' => $request->iheartradio_id,
         ]);
 
         return response()->json([
             'success' => true,
-            'data' => $user
+            'data' => $artist_account
         ],200);
     }
 
@@ -66,19 +63,19 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
+        $artist_account = ArtistAccount::find($id);
 
 
-        if (!$user) {
+        if (!$artist_account) {
             return response()->json([
                 'success' => false,
-                'message' => 'Product with id ' . $id . ' not found'
+                'message' => 'Artist Accounts with id ' . $id . ' not found'
             ], 400);
         }
 
         return response()->json([
             'success' => true,
-            'data' => $user
+            'data' => $artist_account
         ],200);
     }
 
@@ -91,26 +88,26 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
+        $artist_account = ArtistAccount::find($id);
 
-        if (!$user) {
+        if (!$artist_account) {
             return response()->json([
                 'success' => false,
-                'message' => 'User with id ' . $id . ' not found'
+                'message' => 'Artist Accounts with id ' . $id . ' not found'
             ], 400);
         }
 
-        $updated = $user->fill($request->all())->save();
+        $updated = $artist_account->fill($request->all())->save();
 
         if ($updated)
             return response()->json([
                 'success' => true,
-                'data' => $user
+                'data' => $artist_account
             ],200);
         else
             return response()->json([
                 'success' => false,
-                'message' => 'User could not be updated'
+                'message' => 'Artist Accounts could not be updated'
             ], 500);
     }
 
@@ -122,23 +119,23 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
+        $artist_account = ArtistAccount::find($id);
 
-        if (!$user) {
+        if (!$artist_account) {
             return response()->json([
                 'success' => false,
-                'message' => 'User with id ' . $id . ' not found'
+                'message' => 'Artist Accounts with id ' . $id . ' not found'
             ], 400);
         }
 
-        if ($user->delete()) {
+        if ($artist_account->delete()) {
             return response()->json([
                 'success' => true
             ],200);
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'User could not be deleted'
+                'message' => 'Artist Accounts could not be deleted'
             ], 500);
         }
     }
