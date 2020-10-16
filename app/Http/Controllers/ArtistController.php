@@ -80,8 +80,9 @@ class ArtistController extends Controller
      */
     public function show($id)
     {
-        $artist = Artist::find($id);
-
+        $artist = \App\User::where('id',$id)->with(['artist' => function($q) {
+            $q->with(['artist_account','artist_social']);
+        }])->first();
 
         if (!$artist) {
             return response()->json([

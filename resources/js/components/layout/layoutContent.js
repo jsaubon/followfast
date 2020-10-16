@@ -5,6 +5,7 @@ import LayoutHeader from "./LayoutHeader";
 import LayoutFooter from "./LayoutFooter";
 import PageUsers from "../pages/private/pageUsers/pageUsers";
 import PageArtists from "../pages/private/pageArtists/pageArtists";
+import PageArtistProfile from "../pages/private/pageArtists/pageArtistProfile";
 
 const LayoutContent = () => {
     const { Content } = Layout;
@@ -22,6 +23,11 @@ const LayoutContent = () => {
                 >
                     <Switch>
                         <Route exact path="/artists" component={PageArtists} />
+                        <Route
+                            exact
+                            path="/artist/:id"
+                            component={PageArtistProfile}
+                        />
                         <Route exact path="/users" component={PageUsers} />
                         <Route path="/" exact>
                             <Redirect to="/artists" />

@@ -18,8 +18,9 @@ import { DeleteOutlined, EditOutlined, UserOutlined } from "@ant-design/icons";
 import moment from "moment";
 import ButtonGroup from "antd/lib/button/button-group";
 import ModalAddEditArtist from "./modalAddEditArtist";
+import { Link } from "react-router-dom";
 
-const PageArtists = () => {
+const PageArtists = ({ history }) => {
     const [usersList, setArtistsList] = useState([]);
     const [showModalAddEditArtist, setShowModalAddEditArtist] = useState(false);
     const [selectedArtist, setSelectedArtist] = useState();
@@ -104,14 +105,20 @@ const PageArtists = () => {
                 return (
                     <>
                         <ButtonGroup>
-                            <Button
-                                size="small"
-                                type="primary"
-                                icon={<UserOutlined />}
-                                onClick={e => {}}
+                            <Link
+                                to={{
+                                    pathname: "/artist/" + record.id,
+                                    artist: record
+                                }}
                             >
-                                Profile
-                            </Button>
+                                <Button
+                                    size="small"
+                                    type="primary"
+                                    icon={<UserOutlined />}
+                                >
+                                    Profile
+                                </Button>
+                            </Link>
                             {userdata.role != "Artist" && (
                                 <Button
                                     size="small"
