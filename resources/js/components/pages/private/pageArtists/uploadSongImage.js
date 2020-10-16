@@ -65,11 +65,16 @@ const UploadSongImage = ({ setArtistInfo, artistInfo }) => {
                 customRequest={dummyRequest}
                 beforeUpload={beforeUpload}
                 onChange={e => handleChange(e)}
-                
             >
                 {artistInfo.song_image ? (
                     <img
-                        src={artistInfo.song_image}
+                        src={
+                            artistInfo.song_image.indexOf("http") === -1
+                                ? window.location.origin +
+                                  "/" +
+                                  artistInfo.song_image
+                                : artistInfo.song_image
+                        }
                         alt="avatar"
                         style={{ width: "170px", height: "170px" }}
                     />

@@ -43,7 +43,7 @@
 }
 
 .mt-0 {
-    margin-top: 0px;
+    margin-top: 0px !important;
 }
 
 .mb-0 {
@@ -68,4 +68,16 @@
 
 #login_layout .ant-col {
     padding: 0px !important;
+}
+
+.card-body-mp-15 .ant-card-body {
+    padding-top: 15px;
+}
+
+.pl-0 {
+    padding-left: 0px;
+}
+
+.pr-0 {
+    padding-right: 0px;
 }
