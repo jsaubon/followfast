@@ -10,6 +10,8 @@ import Title from "antd/lib/typography/Title";
 import Text from "antd/lib/typography/Text";
 import { fetchData } from "../../../axios";
 import IconArtistSocialAccounts from "./iconArtistSocialAccounts";
+import PlatFormButton from "./platFormButton";
+import PoweredBy from "./poweredBy";
 const pageArtist = props => {
     const [artist, setArtist] = useState([]);
 
@@ -51,7 +53,7 @@ const pageArtist = props => {
                             "')"
                     }}
                 ></div>
-                <Layout.Content className="site-layout artist-content">
+                <Layout.Content className="site-layout artist-content text-align">
                     <div style={{ marginTop: "50px" }}>
                         <Row id="spotify_layout">
                             <Col xs={3} sm={3} md={4} lg={7} xl={7}></Col>
@@ -107,207 +109,68 @@ const pageArtist = props => {
                                         lg={24}
                                         xl={24}
                                     >
-                                        {" "}
-                                        <div className="div-link-button">
-                                            <div
-                                                style={{
-                                                    flex: "1",
-                                                    padding: "17px"
-                                                }}
-                                            >
-                                                {" "}
-                                                <span>Spotify</span>
-                                                <span
-                                                    style={{ float: "right" }}
-                                                >
-                                                    <CaretRightOutlined />
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div className="div-link-button">
-                                            <div
-                                                style={{
-                                                    flex: "1",
-                                                    padding: "17px"
-                                                }}
-                                            >
-                                                {" "}
-                                                <span>Apple Music</span>
-                                                <span
-                                                    style={{ float: "right" }}
-                                                >
-                                                    <CaretRightOutlined />
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div className="div-link-button">
-                                            <div
-                                                style={{
-                                                    flex: "1",
-                                                    padding: "17px"
-                                                }}
-                                            >
-                                                <span>iTunes</span>
-                                                <span
-                                                    style={{ float: "right" }}
-                                                >
-                                                    <CaretRightOutlined />
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div className="div-link-button">
-                                            <div
-                                                style={{
-                                                    flex: "1",
-                                                    padding: "17px"
-                                                }}
-                                            >
-                                                {" "}
-                                                <span>Google Play/Youtube</span>
-                                                <span
-                                                    style={{ float: "right" }}
-                                                >
-                                                    <CaretRightOutlined />
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div className="div-link-button">
-                                            <div
-                                                style={{
-                                                    flex: "1",
-                                                    padding: "17px"
-                                                }}
-                                            >
-                                                {" "}
-                                                <span>Amazon</span>
-                                                <span
-                                                    style={{ float: "right" }}
-                                                >
-                                                    <CaretRightOutlined />
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div className="div-link-button">
-                                            <div
-                                                style={{
-                                                    flex: "1",
-                                                    padding: "17px"
-                                                }}
-                                            >
-                                                {" "}
-                                                <span>Tidal</span>
-                                                <span
-                                                    style={{ float: "right" }}
-                                                >
-                                                    <CaretRightOutlined />
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div className="div-link-button">
-                                            <div
-                                                style={{
-                                                    flex: "1",
-                                                    padding: "17px"
-                                                }}
-                                            >
-                                                {" "}
-                                                <span>Deezer</span>
-                                                <span
-                                                    style={{ float: "right" }}
-                                                >
-                                                    <CaretRightOutlined />
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div className="div-link-button">
-                                            <div
-                                                style={{
-                                                    flex: "1",
-                                                    padding: "17px"
-                                                }}
-                                            >
-                                                {" "}
-                                                <span>Microsoft Groove</span>
-                                                <span
-                                                    style={{ float: "right" }}
-                                                >
-                                                    <CaretRightOutlined />
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div className="div-link-button">
-                                            <div
-                                                style={{
-                                                    flex: "1",
-                                                    padding: "17px"
-                                                }}
-                                            >
-                                                {" "}
-                                                <span>Shazam</span>
-                                                <span
-                                                    style={{ float: "right" }}
-                                                >
-                                                    <CaretRightOutlined />
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div className="div-link-button">
-                                            <div
-                                                style={{
-                                                    flex: "1",
-                                                    padding: "17px"
-                                                }}
-                                            >
-                                                {" "}
-                                                <span>iHeartRadio</span>
-                                                <span
-                                                    style={{ float: "right" }}
-                                                >
-                                                    <CaretRightOutlined />
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div
-                                            style={{
-                                                width: "100%",
-                                                textAlign: "center",
-                                                marginTop: "15px"
-                                            }}
-                                        >
-                                            <div
-                                                style={{
-                                                    flex: "1",
-                                                    padding: "17px"
-                                                }}
-                                            >
-                                                {" "}
-                                                <span
-                                                    style={{
-                                                        textAlign: "center"
-                                                    }}
-                                                >
-                                                    POWERED BY
-                                                </span>
-                                                <br></br>
-                                                <span
-                                                    style={{
-                                                        textAlign: "center",
-                                                        fontSize: "20px"
-                                                    }}
-                                                >
-                                                    FOLLOWFAST
-                                                </span>
-                                            </div>
-                                        </div>
+                                        <PlatFormButton
+                                            buttonText="Spotify"
+                                            artist={artist.artist}
+                                            platFormName="Spotify"
+                                        />
+                                        <PlatFormButton
+                                            buttonText="Apple Music"
+                                            artist={artist.artist}
+                                            platFormName="Apple Music"
+                                        />
+                                        <PlatFormButton
+                                            buttonText="iTunes"
+                                            artist={artist.artist}
+                                            platFormName="iTunes"
+                                        />
+                                        <PlatFormButton
+                                            buttonText="Google Play/Youtube"
+                                            artist={artist.artist}
+                                            platFormName="Google Play/Youtube"
+                                        />
+                                        <PlatFormButton
+                                            buttonText="Amazon"
+                                            artist={artist.artist}
+                                            platFormName="Amazon"
+                                        />
+                                        <PlatFormButton
+                                            buttonText="Tidal"
+                                            artist={artist.artist}
+                                            platFormName="Tidal"
+                                        />
+                                        <PlatFormButton
+                                            buttonText="Deezer"
+                                            artist={artist.artist}
+                                            platFormName="Deezer"
+                                        />
+                                        <PlatFormButton
+                                            buttonText="Microsoft Groove"
+                                            artist={artist.artist}
+                                            platFormName="Microsoft Groover"
+                                        />
+                                        <PlatFormButton
+                                            buttonText="Napster"
+                                            artist={artist.artist}
+                                            platFormName="Napsterr"
+                                        />
+                                        <PlatFormButton
+                                            buttonText="Shazam"
+                                            artist={artist.artist}
+                                            platFormName="Shazam"
+                                        />
+                                        <PlatFormButton
+                                            buttonText="iHeartRadio"
+                                            artist={artist.artist}
+                                            platFormName="iHeartRadio"
+                                        />
+                                        <PoweredBy />
                                     </Col>
                                 </Row>
                             </Col>
                             <Col xs={2} sm={2} md={3} lg={6} xl={6}></Col>
                         </Row>
                     </div>
-                    <br></br>
-                    <br></br>
-                    <br></br>
                 </Layout.Content>
             </Layout>
         )
