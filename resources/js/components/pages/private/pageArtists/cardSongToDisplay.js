@@ -26,8 +26,8 @@ const CardSongToDisplay = ({ artistInfo }) => {
             <br />
             <Text>Notes: {artistInfo.artist.notes}</Text> <br />
             <br />
-            <Link to={`/artist/${artistInfo.id}`}>
-                goto {">"}Followfast Link
+            <Link to={`/artist/${artistInfo.id}`} target="_blank">
+                {">"} FollowFast Link {"<"}
             </Link>
             {console.log(artistInfo)}
         </Card>

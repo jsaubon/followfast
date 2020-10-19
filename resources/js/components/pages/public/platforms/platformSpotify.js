@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import SpotifyWebApi from "spotify-web-api-js";
 import { fetchData } from "../../../../axios";
 export const authEndpoint = "https://accounts.spotify.com/authorize";
+const artistInfo = localStorage.artist ? JSON.parse(localStorage.artist) : "";
 const clientId = "09f5bed2a09e492e93979f2a45b90d39";
 const redirectUri = `${window.location.origin}/platform/spotify`;
 const scopes = [
@@ -36,32 +37,39 @@ const PlatformSpotify = () => {
         if (spotify_token) {
             var spotifyApi = new SpotifyWebApi();
             spotifyApi.setAccessToken(spotify_token);
-            spotifyApi.getMe().then(me => {
-                console.log(me, me.email, me.display_name);
-                spotifyApi
-                    .followArtists([localStorage.spotify_id])
-                    .then(res => {
-                        let data = {
-                            artist_id: localStorage.artist_id,
-                            display_name: me.display_name,
-                            email: me.email,
-                            user_url: me.external_urls.spotify,
-                            platform: "Spotify"
-                        };
-                        fetchData("POST", "api/artist_follower", data).then(
-                            res => {
-                                console.log("res");
-                            }
-                        );
-                        location.href =
-                            "https://open.spotify.com/artist/" +
-                            localStorage.spotify_id;
-                    });
-            }).catch(err => {
-                // console.log(err.response);
-                localStorage.removeItem('spotify_token');
-                location.reload();
-            });
+            spotifyApi
+                .getMe()
+                .then(me => {
+                    console.log(me, me.email, me.display_name, artistInfo);
+                    spotifyApi
+                        .followArtists([
+                            artistInfo.artist.artist_account.spotify_id
+                        ])
+                        .then(res => {
+                            let data = {
+                                artist_id: artistInfo.artist.id,
+                                display_name: me.display_name,
+                                email: me.email,
+                                user_url: me.external_urls.spotify,
+                                platform: "Spotify"
+                            };
+                            fetchData("POST", "api/artist_follower", data).then(
+                                res => {
+                                    location.href =
+                                        "https://open.spotify.com/artist/" +
+                                        artistInfo.artist.artist_account
+                                            .spotify_id;
+                                }
+                            );
+                        });
+                })
+                .catch(err => {
+                    // console.log(err.response);
+                    localStorage.removeItem("spotify_token");
+                    location.reload();
+                });
+        } else {
+            goToSpotifyLogin();
         }
         return () => {};
     }, []);

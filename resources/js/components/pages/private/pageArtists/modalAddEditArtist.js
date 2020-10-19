@@ -181,7 +181,15 @@ const ModalAddEditArtist = ({
                             onFinish={e => submitForm(e)}
                             onFinishFailed={e => console.log(e)}
                             ref={e => (formAddEditArtist = e)}
-                            initialValues={selectedArtist}
+                            initialValues={
+                                selectedArtist && {
+                                    ...selectedArtist,
+                                    active:
+                                        selectedArtist.active == 1
+                                            ? "Active"
+                                            : "Inactive"
+                                }
+                            }
                         >
                             <Form.Item name="id" className="hide">
                                 <Input name="id" />

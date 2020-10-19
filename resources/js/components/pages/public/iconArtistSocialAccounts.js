@@ -14,13 +14,7 @@ const iconArtistSocialAccounts = artist => {
     return (
         <>
             {artist.artist.artist_social.instagram && (
-                <a
-                    href={
-                        "https://www.instagram.com/" +
-                        artist.artist.artist_social.instagram
-                    }
-                    target="_blank"
-                >
+                <a href={artist.artist.artist_social.instagram} target="_blank">
                     <img
                         src={
                             window.location.origin +
@@ -37,13 +31,7 @@ const iconArtistSocialAccounts = artist => {
                 </a>
             )}
             {artist.artist.artist_social.facebook && (
-                <a
-                    href={
-                        "https://www.facebook.com/" +
-                        artist.artist.artist_social.facebook
-                    }
-                    target="_blank"
-                >
+                <a href={artist.artist.artist_social.facebook} target="_blank">
                     <img
                         src={
                             window.location.origin +
@@ -62,13 +50,7 @@ const iconArtistSocialAccounts = artist => {
             )}
 
             {artist.artist.artist_social.twitter && (
-                <a
-                    href={
-                        "https://www.twitter.com/" +
-                        artist.artist.artist_social.twitter
-                    }
-                    target="_blank"
-                >
+                <a href={artist.artist.artist_social.twitter} target="_blank">
                     <img
                         src={
                             window.location.origin +
@@ -86,13 +68,7 @@ const iconArtistSocialAccounts = artist => {
                 </a>
             )}
             {artist.artist.artist_social.youtube && (
-                <a
-                    href={
-                        "https://www.youtube.com/" +
-                        artist.artist.artist_social.youtube
-                    }
-                    target="_blank"
-                >
+                <a href={artist.artist.artist_social.youtube} target="_blank">
                     <img
                         src={
                             window.location.origin +
