@@ -20,13 +20,13 @@ const App = () => {
                 <Switch>
                     <Route
                         path="/artist/:id"
-                        name="spotify"
+                        name="Artist"
                         exact
                         component={PageArtist}
                     />
                     <Route
                         path="/platform/spotify"
-                        name="spotify"
+                        name="Spotify"
                         exact
                         component={PlatformSpotify}
                     />
