@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', 'PassportController@login');
 Route::post('register', 'PassportController@register');
+Route::get('artist/song/{song}', 'ArtistController@getBySong');
+Route::post('artist_follower/follow', 'ArtistFollowerController@follow');
 
 Route::middleware('auth:api')->group(function () {
     // Route::get('user', 'PassportController@details');

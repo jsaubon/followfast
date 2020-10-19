@@ -30,8 +30,10 @@ const PlatformSpotify = () => {
     let spotify_token = localStorage.spotify_token;
     useEffect(() => {
         if (hash.access_token) {
+            // localStorage.stop_login = 1;
             localStorage.spotify_token = hash.access_token;
-            window.location.href = redirectUri;
+            // console.log(spotify_token);
+            // window.location.href = redirectUri;
         }
 
         if (spotify_token) {
@@ -40,31 +42,34 @@ const PlatformSpotify = () => {
             spotifyApi
                 .getMe()
                 .then(me => {
-                    console.log(me, me.email, me.display_name, artistInfo);
+                    console.log(
+                        me,
+                        me.email,
+                        me.display_name,
+                        artistInfo,
+                        artistInfo.artist_account.spotify_id
+                    );
                     spotifyApi
-                        .followArtists([
-                            artistInfo.artist.artist_account.spotify_id
-                        ])
+                        .followArtists([artistInfo.artist_account.spotify_id])
                         .then(res => {
                             let data = {
-                                artist_id: artistInfo.artist.id,
+                                artist_id: artistInfo.id,
                                 display_name: me.display_name,
                                 email: me.email,
                                 user_url: me.external_urls.spotify,
                                 platform: "Spotify"
                             };
-                            fetchData("POST", "api/artist_follower", data).then(
+                            fetchData("POST", "api/artist_follower/follow", data).then(
                                 res => {
                                     location.href =
                                         "https://open.spotify.com/artist/" +
-                                        artistInfo.artist.artist_account
-                                            .spotify_id;
+                                        artistInfo.artist_account.spotify_id;
                                 }
                             );
                         });
                 })
                 .catch(err => {
-                    // console.log(err.response);
+                    console.log(err);
                     localStorage.removeItem("spotify_token");
                     location.reload();
                 });
@@ -91,7 +96,7 @@ const PlatformSpotify = () => {
                             //     "%20"
                             // )}&response_type=token&show_dialog=true`}
                         >
-                            Login to Spotify
+                            {/* Login to Spotify */}
                         </a>
                     )}{" "}
                     {spotify_token && <>Redirecting you to Spotify</>}

@@ -11,9 +11,16 @@ import Text from "antd/lib/typography/Text";
 import { fetchData } from "../../../axios";
 
 const platFormButton = ({ buttonText, artist, platFormName }) => {
+    const goToPlatform = () => {
+        localStorage.artist = JSON.stringify(artist);
+        window.open(
+            window.location.origin + "/platform/" + platFormName,
+            "_blank"
+        );
+    };
     return (
         <>
-            <div className="div-link-button">
+            <div className="div-link-button" onClick={e => goToPlatform()}>
                 <div
                     style={{
                         flex: "1",

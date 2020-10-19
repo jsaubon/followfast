@@ -98,6 +98,26 @@ class ArtistController extends Controller
             'data' => $artist
         ],200);
     }
+    public function getBySong($song)
+    {
+        $song = str_replace('_',' ',$song);
+        $artist = \App\Artist::where('song_title',$song)->with(['user','artist_account','artist_social','artist_followers' => function($q1) {
+                $q1->orderBy('created_at','desc');
+            }])->first();;
+        // $artist = \App\User::where('id',$id)->with()->first();
+
+        if (!$artist) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Artist with id ' . $id . ' not found'
+            ], 400);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $artist
+        ],200);
+    }
 
     /**
      * Update the specified resource in storage.

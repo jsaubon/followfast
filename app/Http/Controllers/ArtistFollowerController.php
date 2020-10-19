@@ -59,11 +59,40 @@ class ArtistFollowerController extends Controller
                 'success' => true,
                 'data' => 'already followed'
             ],200);
-        }
+        } 
+    }
+    public function follow(Request $request)
+    {
+        $this->validate($request, [
+            'artist_id' => 'required',
+            'email' => 'required',
+            'display_name' => 'required',
+            'platform' => 'required',
+            'user_url' => 'required',
+        ]);
 
-        
-
-        
+        $artist_follower = ArtistFollower::where('artist_id',$request->artist_id)
+                                        ->where('email',$request->email)
+                                        ->where('platform',$request->platform)
+                                        ->get()->first();
+        if(!$artist_follower) {
+            $artist_follower = ArtistFollower::create([
+                'artist_id' => $request->artist_id,
+                'email' => $request->email,
+                'display_name' => $request->display_name,
+                'platform' => $request->platform,
+                'user_url' => $request->user_url,
+            ]);
+            return response()->json([
+                'success' => true,
+                'data' => $artist_follower
+            ],200);
+        } else {
+            return response()->json([
+                'success' => true,
+                'data' => 'already followed'
+            ],200);
+        } 
     }
 
     /**

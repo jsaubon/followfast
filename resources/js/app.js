@@ -19,7 +19,7 @@ const App = () => {
             <Router>
                 <Switch>
                     <Route
-                        path="/artist/:id"
+                        path="/artist/:song"
                         name="Artist"
                         exact
                         component={PageArtist}

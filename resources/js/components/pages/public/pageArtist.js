@@ -22,10 +22,12 @@ const pageArtist = props => {
     }, []);
 
     const getArtistbyId = () => {
-        fetchData("GET", "api/artist/" + props.match.params.id).then(res => {
-            setArtist(res.data);
-            console.log(res.data);
-        });
+        fetchData("GET", "api/artist/song/" + props.match.params.song).then(
+            res => {
+                setArtist(res.data);
+                console.log(res.data);
+            }
+        );
     };
 
     return (
@@ -38,7 +40,7 @@ const pageArtist = props => {
                             "url('" +
                             window.location.origin +
                             "/" +
-                            artist.artist.song_image +
+                            artist.song_image +
                             "')"
                     }}
                 ></div>
@@ -49,7 +51,7 @@ const pageArtist = props => {
                             "url('" +
                             window.location.origin +
                             "/" +
-                            artist.artist.song_image +
+                            artist.song_image +
                             "')"
                     }}
                 ></div>
@@ -70,7 +72,7 @@ const pageArtist = props => {
                                             src={
                                                 window.location.origin +
                                                 "/" +
-                                                artist.artist.song_image
+                                                artist.song_image
                                             }
                                             className="image-profile"
                                         ></img>
@@ -83,14 +85,14 @@ const pageArtist = props => {
                                         xl={14}
                                     >
                                         <div>
-                                            <p>{artist.name}</p>
+                                            <p>{artist.user.name}</p>
                                         </div>
                                         <div className="profile-header">
-                                            {artist.artist.song_title}
+                                            {artist.song_title}
                                         </div>
                                         <div>
                                             <IconArtistSocialAccounts
-                                                artist={artist.artist}
+                                                artist={artist}
                                             />
                                         </div>
                                     </Col>
@@ -111,58 +113,58 @@ const pageArtist = props => {
                                     >
                                         <PlatFormButton
                                             buttonText="Spotify"
-                                            artist={artist.artist}
-                                            platFormName="Spotify"
+                                            artist={artist}
+                                            platFormName="spotify"
                                         />
                                         <PlatFormButton
                                             buttonText="Apple Music"
-                                            artist={artist.artist}
-                                            platFormName="Apple Music"
+                                            artist={artist}
+                                            platFormName="applemusic"
                                         />
                                         <PlatFormButton
                                             buttonText="iTunes"
-                                            artist={artist.artist}
+                                            artist={artist}
                                             platFormName="iTunes"
                                         />
                                         <PlatFormButton
                                             buttonText="Google Play/Youtube"
-                                            artist={artist.artist}
-                                            platFormName="Google Play/Youtube"
+                                            artist={artist}
+                                            platFormName="googleplay"
                                         />
                                         <PlatFormButton
                                             buttonText="Amazon"
-                                            artist={artist.artist}
-                                            platFormName="Amazon"
+                                            artist={artist}
+                                            platFormName="amazon"
                                         />
                                         <PlatFormButton
                                             buttonText="Tidal"
-                                            artist={artist.artist}
-                                            platFormName="Tidal"
+                                            artist={artist}
+                                            platFormName="tidal"
                                         />
                                         <PlatFormButton
                                             buttonText="Deezer"
-                                            artist={artist.artist}
-                                            platFormName="Deezer"
+                                            artist={artist}
+                                            platFormName="deezer"
                                         />
                                         <PlatFormButton
                                             buttonText="Microsoft Groove"
-                                            artist={artist.artist}
-                                            platFormName="Microsoft Groover"
+                                            artist={artist}
+                                            platFormName="microsoftgroove"
                                         />
                                         <PlatFormButton
                                             buttonText="Napster"
-                                            artist={artist.artist}
-                                            platFormName="Napsterr"
+                                            artist={artist}
+                                            platFormName="napsterr"
                                         />
                                         <PlatFormButton
                                             buttonText="Shazam"
-                                            artist={artist.artist}
-                                            platFormName="Shazam"
+                                            artist={artist}
+                                            platFormName="shazam"
                                         />
                                         <PlatFormButton
                                             buttonText="iHeartRadio"
-                                            artist={artist.artist}
-                                            platFormName="iHeartRadio"
+                                            artist={artist}
+                                            platFormName="iheartradio"
                                         />
                                         <PoweredBy />
                                     </Col>
