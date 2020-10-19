@@ -9,6 +9,7 @@ import "antd/dist/antd.css";
 import "./style/custom.css";
 import StateProvider from "./Provider";
 import Login from "./components/pages/public/login";
+import PageArtist from "./components/pages/public/pageArtist";
 
 const App = () => {
     let isLogged = localStorage.getItem("token");
@@ -16,6 +17,11 @@ const App = () => {
         <StateProvider>
             <Router>
                 <Switch>
+                    <Route
+                        path="/artist"
+                        name="spotify"
+                        component={isLogged ? PageArtist : Login}
+                    />
                     <Route
                         path="/"
                         name="Home"

@@ -5,11 +5,13 @@ import LayoutHeader from "./LayoutHeader";
 import LayoutFooter from "./LayoutFooter";
 import PageUsers from "../pages/private/pageUsers/pageUsers";
 import PageArtists from "../pages/private/pageArtists/pageArtists";
+
 import PageArtistProfile from "../pages/private/pageArtists/pageArtistProfile";
 
 const LayoutContent = () => {
     const { Content } = Layout;
-
+    let userdata = JSON.parse(localStorage.userdata);
+    console.log(userdata.role);
     return (
         <Layout className="layout">
             <LayoutHeader />
@@ -29,9 +31,6 @@ const LayoutContent = () => {
                             component={PageArtistProfile}
                         />
                         <Route exact path="/users" component={PageUsers} />
-                        <Route path="/" exact>
-                            <Redirect to="/artists" />
-                        </Route>
                     </Switch>
                 </div>
             </Content>
