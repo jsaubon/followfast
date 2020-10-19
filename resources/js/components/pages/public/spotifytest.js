@@ -45,7 +45,7 @@ const SpotifyTest = () => {
                             artist_id: localStorage.artist_id,
                             display_name: me.display_name,
                             email: me.email,
-                            spotify_url: me.external_urls.spotify,
+                            user_url: me.external_urls.spotify,
                             platform: "Spotify"
                         };
                         fetchData("POST", "api/artist_follower", data).then(

@@ -35,21 +35,35 @@ class ArtistFollowerController extends Controller
             'email' => 'required',
             'display_name' => 'required',
             'platform' => 'required',
-            'spotify_url' => 'required',
+            'user_url' => 'required',
         ]);
 
-        $artist_follower = ArtistFollower::create([
-            'artist_id' => $request->artist_id,
-            'email' => $request->email,
-            'display_name' => $request->display_name,
-            'platform' => $request->platform,
-            'spotify_url' => $request->spotify_url,
-        ]);
+        $artist_follower = ArtistFollower::where('artist_id',$request->artist_id)
+                                        ->where('email',$request->email)
+                                        ->where('platform',$request->platform)
+                                        ->get()->first();
+        if(!$artist_follower) {
+            $artist_follower = ArtistFollower::create([
+                'artist_id' => $request->artist_id,
+                'email' => $request->email,
+                'display_name' => $request->display_name,
+                'platform' => $request->platform,
+                'user_url' => $request->user_url,
+            ]);
+            return response()->json([
+                'success' => true,
+                'data' => $artist_follower
+            ],200);
+        } else {
+            return response()->json([
+                'success' => true,
+                'data' => 'already followed'
+            ],200);
+        }
 
-        return response()->json([
-            'success' => true,
-            'data' => $artist_follower
-        ],200);
+        
+
+        
     }
 
     /**
@@ -58,9 +72,18 @@ class ArtistFollowerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
-        $artist_follower = ArtistFollower::find($id);
+        $columns = [
+            'display_name',
+            'email'
+        ];
+        $artist_follower = ArtistFollower::where('artist_id',$id);
+        foreach ($columns as $key => $column) {
+            $artist_follower->where($column,'LIKE','%'.$request->search.'%');
+        }
+
+        $artist_follower = $artist_follower->orderBy('created_at','desc')->get();
 
 
         if (!$artist_follower) {

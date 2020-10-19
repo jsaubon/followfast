@@ -7,7 +7,7 @@ import {
     TwitterOutlined,
     YoutubeOutlined
 } from "@ant-design/icons";
-import { Button, Card, Col, Row, Divider, Tag } from "antd";
+import { Button, Card, Col, Row, Divider, Tag, Table, Input } from "antd";
 import ButtonGroup from "antd/lib/button/button-group";
 import Text from "antd/lib/typography/Text";
 import Title from "antd/lib/typography/Title";
@@ -15,8 +15,9 @@ import React, { useEffect, useState } from "react";
 import { fetchData } from "../../../../axios";
 import ModalAddEditArtist from "./modalAddEditArtist";
 import CardSongToDisplay from "./cardSongToDisplay";
+import moment from "moment";
 
-const PageArtistProfile = ({ match, location }) => {
+const PageArtistProfile = ({ match, history, location }) => {
     const [artistInfo, setArtistInfo] = useState();
 
     const [showModalAddEditArtist, setShowModalAddEditArtist] = useState(false);
@@ -44,6 +45,14 @@ const PageArtistProfile = ({ match, location }) => {
         console.log(artistInfo);
         return () => {};
     }, [artistInfo]);
+
+    const handleSearchFollower = (e) => {
+        fetchData("GET",`api/artist_follower/${artistInfo.artist.id}?search=${e.target.value}`).then(res => {
+            if(res.success) {
+                setArtistInfo({...artistInfo, artist: {...artistInfo.artist, artist_followers: res.data} })
+            }
+        })
+    }
     return (
         <>
             <Title levle={4}>Artist Profile</Title>
@@ -54,23 +63,25 @@ const PageArtistProfile = ({ match, location }) => {
             >
                 Back
             </Button>
-            <Button
-                type="primary"
-                onClick={e => toggleShowModalAddEditArtist(artistInfo)}
-                style={{ float: "right" }}
-                icon={<EditOutlined />}
-            >
-                Edit
-            </Button>
+            
             {artistInfo && (
                 <>
                     <Row>
                         <Col xs={24} md={10} className="pl-0">
                             <CardSongToDisplay artistInfo={artistInfo} />
-                        </Col>
-                        <Col xs={24} md={14} className="pr-0">
+
                             <Card className="mt-10 ">
-                                <Title level={3}>Artist Information</Title>
+                                <Title level={3}>Artist Information 
+                                    <Button
+                                        type="link"
+                                        onClick={e => toggleShowModalAddEditArtist(artistInfo)}
+                                        style={{ float: "right" }}
+                                        icon={<EditOutlined />}
+                                    >
+                                        Edit
+                                    </Button>
+                                </Title>
+                                
                                 <Row>
                                     <Col xs={24} md={12}>
                                         <Text>Artist:</Text>
@@ -149,10 +160,58 @@ const PageArtistProfile = ({ match, location }) => {
                                 })}
                             </Card>
                         </Col>
+                        <Col xs={24} md={14} className="pr-0">
+                        <Card className="mt-10 ">
+                                <Title level={4}>Followers</Title>
+                                <Input.Search placeholder="Search here" onChange={e => handleSearchFollower(e)}/>
+                                <br/>
+                                <br/>
+                                <Table dataSource={artistInfo.artist.artist_followers} >
+                                    <Table.Column
+                                        title="Platform"
+                                        dataIndex="platform"
+                                        key="platform"
+
+                                    />
+                                    <Table.Column
+                                        title="Name"
+                                        dataIndex="display_name"
+                                        key="display_name"
+                                        render={(text, record) => {
+                                            return (
+                                                <a
+                                                    target="_blank"
+                                                    href={record.user_url}
+                                                >
+                                                    {record.display_name}
+                                                </a>
+                                            );
+                                        }}
+                                    />
+                                    <Table.Column
+                                        title="Email"
+                                        dataIndex="email"
+                                        key="email"
+                                    />
+                                    <Table.Column
+                                        title="Followed At"
+                                        dataIndex="created_at"
+                                        key="created_at"
+                                        render={(text, record) => {
+                                            return moment(
+                                                record.created_at
+                                            ).format("YYYY-MM-DD hh:mm A");
+                                        }}
+                                    />
+                                </Table>
+                            </Card>
+                        </Col>
                     </Row>
                     <Divider />
                     <Row>
-                        <Col xs={24} md={12}></Col>
+                        <Col xs={24} md={12}>
+                            
+                        </Col>
                         <Col xs={24} md={12}></Col>
                     </Row>
                 </>

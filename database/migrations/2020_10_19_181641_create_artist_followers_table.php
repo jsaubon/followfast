@@ -19,7 +19,7 @@ class CreateArtistFollowersTable extends Migration
             $table->string('display_name');
             $table->string('email');
             $table->string('platform');
-            $table->string('spotify_url');
+            $table->string('user_url');
             $table->timestamps();
         });
     }
