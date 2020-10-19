@@ -4,9 +4,9 @@
     min-height: 280px;
 }
 
-/* .layout { */
-/* height: 100vh; */
-/* } */
+.layout {
+    min-height: 100vh;
+}
 .layout .logo {
     width: 120px;
     height: 31px;

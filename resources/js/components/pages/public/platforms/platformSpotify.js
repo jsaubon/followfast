@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import SpotifyWebApi from "spotify-web-api-js";
-import { fetchData } from "../../../axios";
+import { fetchData } from "../../../../axios";
 export const authEndpoint = "https://accounts.spotify.com/authorize";
 const clientId = "09f5bed2a09e492e93979f2a45b90d39";
-const redirectUri = `${window.location.origin}/spotifytest`;
+const redirectUri = `${window.location.origin}/platform/spotify`;
 const scopes = [
-    "user-follow-read",
+    // "user-follow-read",
     "user-follow-modify",
-    "user-library-read",
-    "user-library-modify",
+    // "user-library-read",
+    // "user-library-modify",
     "user-read-email"
 ];
 // window.location.hash = "";
@@ -25,7 +25,7 @@ const hash = window.location.hash
         return initial;
     }, {});
 
-const SpotifyTest = () => {
+const PlatformSpotify = () => {
     let spotify_token = localStorage.spotify_token;
     useEffect(() => {
         if (hash.access_token) {
@@ -55,17 +55,21 @@ const SpotifyTest = () => {
                         );
                         location.href =
                             "https://open.spotify.com/artist/" +
-                            localStorage.artist_id;
+                            localStorage.spotify_id;
                     });
+            }).catch(err => {
+                // console.log(err.response);
+                localStorage.removeItem('spotify_token');
+                location.reload();
             });
         }
         return () => {};
     }, []);
 
-    const goToSpotify = () => {
+    const goToSpotifyLogin = () => {
         location.href = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
             "%20"
-        )}&response_type=token&show_dialog=true`;
+        )}&response_type=token&show_dialog=false`;
     };
     return (
         <div>
@@ -74,7 +78,7 @@ const SpotifyTest = () => {
                     {!spotify_token && (
                         <a
                             className="btn btn--loginApp-link"
-                            onClick={e => goToSpotify()}
+                            onClick={e => goToSpotifyLogin()}
                             // href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
                             //     "%20"
                             // )}&response_type=token&show_dialog=true`}
@@ -89,4 +93,4 @@ const SpotifyTest = () => {
     );
 };
 
-export default SpotifyTest;
+export default PlatformSpotify;

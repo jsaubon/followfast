@@ -10,6 +10,7 @@ import "./style/custom.css";
 import StateProvider from "./Provider";
 import Login from "./components/pages/public/login";
 import PageArtist from "./components/pages/public/pageArtist";
+import PlatformSpotify from "./components/pages/public/platforms/platformSpotify";
 
 const App = () => {
     let isLogged = localStorage.getItem("token");
@@ -18,9 +19,16 @@ const App = () => {
             <Router>
                 <Switch>
                     <Route
-                        path="/artist"
+                        path="/artist/:id"
                         name="spotify"
-                        component={isLogged ? PageArtist : Login}
+                        exact
+                        component={PageArtist}
+                    />
+                    <Route
+                        path="/platform/spotify"
+                        name="spotify"
+                        exact
+                        component={PlatformSpotify}
                     />
                     <Route
                         path="/"

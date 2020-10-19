@@ -27,7 +27,7 @@ const LayoutContent = () => {
                         <Route exact path="/artists" component={PageArtists} />
                         <Route
                             exact
-                            path="/artist/:id"
+                            path="/artist/profile/:id"
                             component={PageArtistProfile}
                         />
                         <Route exact path="/users" component={PageUsers} />
