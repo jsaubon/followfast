@@ -97,7 +97,9 @@
 .div-link-button:hover {
     background: rgb(255 255 255 / 20%);
 }
-
+.artist-content {
+    z-index: 99;
+}
 .profile-header {
     font-size: 60px;
     font-weight: bold;
@@ -133,4 +135,45 @@
     .image-profile {
         width: 180px;
     }
+}
+
+.song-image-background-blur {
+    background: no-repeat center center fixed;
+    background-size: cover;
+    display: block;
+    left: -5px;
+    top: -5px;
+    bottom: -5px;
+    position: fixed;
+    right: -5px;
+    /* 
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(10px); */
+
+    filter: brightness(50%) blur(20px);
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    border: none;
+    margin: -5px;
+    z-index: 2;
+    padding: 10px 10px;
+}
+
+.song-image-background {
+    background: no-repeat center center fixed;
+    background-size: cover;
+    display: block;
+    left: -5px;
+    top: -5px;
+    bottom: -5px;
+    position: fixed;
+    right: -5px;
+    filter: brightness(40%);
+    border: none;
+    margin: -5px;
+    z-index: 1;
+    padding: 10px 10px;
 }

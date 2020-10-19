@@ -38,6 +38,7 @@ const PageArtistProfile = ({ match, location }) => {
     const getArtist = () => {
         fetchData("GET", "api/artist/" + match.params.id).then(res => {
             setArtistInfo(res.data);
+            console.log(res.data);
         });
     };
     useEffect(() => {

@@ -107,7 +107,7 @@ const PageArtists = ({ history }) => {
                         <ButtonGroup>
                             <Link
                                 to={{
-                                    pathname: "/artist/" + record.id,
+                                    pathname: "/artist/profile/" + record.id,
                                     artist: record
                                 }}
                             >

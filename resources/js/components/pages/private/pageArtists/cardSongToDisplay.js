@@ -2,7 +2,7 @@ import { Card } from "antd";
 import Text from "antd/lib/typography/Text";
 import Title from "antd/lib/typography/Title";
 import React from "react";
-
+import { Link } from "react-router-dom";
 const CardSongToDisplay = ({ artistInfo }) => {
     return (
         <Card className="mt-10 ">
@@ -22,10 +22,14 @@ const CardSongToDisplay = ({ artistInfo }) => {
             <Title level={4} style={{ marginTop: 0 }}>
                 {artistInfo.artist.song_title}
             </Title>
-
             <Text>Description: {artistInfo.artist.song_description}</Text>
             <br />
-            <Text>Notes: {artistInfo.artist.notes}</Text>
+            <Text>Notes: {artistInfo.artist.notes}</Text> <br />
+            <br />
+            <Link to={`/artist/${artistInfo.id}`}>
+                goto {">"}Followfast Link
+            </Link>
+            {console.log(artistInfo)}
         </Card>
     );
 };

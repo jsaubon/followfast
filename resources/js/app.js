@@ -18,9 +18,10 @@ const App = () => {
             <Router>
                 <Switch>
                     <Route
-                        path="/artist"
-                        name="spotify"
+                        path="/artist/:id"
+                        name="artist"
                         component={isLogged ? PageArtist : Login}
+                        exact
                     />
                     <Route
                         path="/"
