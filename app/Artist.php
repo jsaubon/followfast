@@ -18,4 +18,7 @@ class Artist extends Model
     public function artist_social() {
         return $this->hasOne('\App\ArtistSocial','artist_id');
     }
+    public function artist_followers() {
+        return $this->hasMany('\App\ArtistFollower','artist_id');
+    }
 }
