@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-
+use App\Artist;
+use DB;
 class UserController extends Controller
 {
     /**
@@ -143,5 +144,24 @@ class UserController extends Controller
                 'message' => 'User could not be deleted'
             ], 500);
         }
+    }
+
+    public function search(Request $request){
+
+        $search = $request->search;
+
+    //    $data =  DB::table('users')->join('artists','users.id','artists.user_id')
+    //    ->where('name','like','%'.$search.'%')
+    //    ->orWhere('email','like','%'.$search.'%')
+    //    ->orWhere('song_title','like','%'.$search.'%')
+    //    ->get();
+
+
+
+        return response()->json([
+            'success' => true,
+            'search'=>$search,
+            'data' => $data
+        ],200);
     }
 }
