@@ -59,13 +59,15 @@ const PlatformSpotify = () => {
                                 user_url: me.external_urls.spotify,
                                 platform: "Spotify"
                             };
-                            fetchData("POST", "api/artist_follower/follow", data).then(
-                                res => {
-                                    location.href =
-                                        "https://open.spotify.com/artist/" +
-                                        artistInfo.artist_account.spotify_id;
-                                }
-                            );
+                            fetchData(
+                                "POST",
+                                "api/artist_follower/follow",
+                                data
+                            ).then(res => {
+                                // location.href =
+                                //     "https://open.spotify.com/artist/" +
+                                //     artistInfo.artist_account.spotify_id;
+                            });
                         });
                 })
                 .catch(err => {
