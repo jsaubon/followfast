@@ -16,19 +16,26 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $role = $request->role;
-        $users = User::where('role',$role);
+       
         if($role == 'Artist') {
+            $users = User::where('role',$role);
             $users->with(['artist' => function($q) {
                 $q->with(['artist_account','artist_social','artist_followers' => function($q1) {
                     $q1->orderBy('created_at','desc');
                 }]);
             }]);
+            $users = $users->orderBy('id','desc')->get();
+        }else{
+            $users = User::where('role','Admin')->orWhere('role','Super Admin')->get();
         }
 
-        $users = $users->orderBy('id','desc')->get();
+    
+
+
 
         return response()->json([
             'success' => true,
+            'role'=> $role ,
             'data' => $users
         ],200);
     }
@@ -148,20 +155,19 @@ class UserController extends Controller
 
     public function search(Request $request){
 
-        $search = $request->search;
 
-    //    $data =  DB::table('users')->join('artists','users.id','artists.user_id')
-    //    ->where('name','like','%'.$search.'%')
-    //    ->orWhere('email','like','%'.$search.'%')
-    //    ->orWhere('song_title','like','%'.$search.'%')
-    //    ->get();
-
-
+        $data= User::where('role','<>','Artist')
+        ->where(function($query) use($request) {
+            $query->where('name','like','%'.$request->search.'%')
+            ->orWhere('email','like','%'.$request->search.'%');
+        })
+        ->get();
+      
 
         return response()->json([
             'success' => true,
-            'search'=>$search,
-            'data' => $data
+            'data' => $data,
+            'search' => $request->search
         ],200);
     }
 }
