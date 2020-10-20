@@ -68,7 +68,7 @@ const CardSongToDisplay = ({ artistInfo }) => {
                         `${
                             window.location.origin
                         }/artist/${artistInfo.artist.song_title
-                            .replace(" ", "")
+                            .replace(" ", "_")
                             .toLowerCase()}`
                     );
                 }}
@@ -79,7 +79,7 @@ const CardSongToDisplay = ({ artistInfo }) => {
                 >{`${
                     window.location.origin
                 }/artist/${artistInfo.artist.song_title
-                    .replace(" ", "")
+                    .replace(" ", "_")
                     .toLowerCase()}`}</Text>
             </Tooltip>
             <br />
