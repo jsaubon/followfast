@@ -10,7 +10,9 @@ import {
     Card,
     Modal,
     Input,
-    Form
+    Form,
+    Row,
+    Col
 } from "antd";
 import Title from "antd/lib/typography/Title";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
@@ -18,6 +20,7 @@ import moment from "moment";
 import ButtonGroup from "antd/lib/button/button-group";
 
 const PageUsers = () => {
+    const { Search } = Input;
     const [usersList, setUsersList] = useState([]);
     const [showModalAddEditUser, setShowModalAddEditUser] = useState(false);
     const [selectedUser, setSelectedUser] = useState();
@@ -53,22 +56,30 @@ const PageUsers = () => {
         {
             title: "Name",
             dataIndex: "name",
-            key: "name"
+            key: "name",
+            sorter: (a, b) => a.name.localeCompare(b.name),
+            sortDirections: ["descend", "ascend"]
         },
         {
             title: "Email",
             dataIndex: "email",
-            key: "email"
+            key: "email",
+            sorter: (a, b) => a.email.localeCompare(b.email),
+            sortDirections: ["descend", "ascend"]
         },
         {
             title: "Role",
             dataIndex: "role",
-            key: "role"
+            key: "role",
+            sorter: (a, b) => a.role.localeCompare(b.role),
+            sortDirections: ["descend", "ascend"]
         },
         {
             title: "Status",
             dataIndex: "active",
             key: "active",
+            sorter: (a, b) => a.active.localeCompare(b.active),
+            sortDirections: ["descend", "ascend"],
             render: (text, record) => {
                 return record.active ? "Active" : "Inactive";
             }
@@ -77,6 +88,9 @@ const PageUsers = () => {
             title: "Date Created",
             dataIndex: "created_at",
             key: "created_at",
+            sorter: (a, b) =>
+                moment(a.created_at).unix() - moment(b.created_at).unix(),
+            sortDirections: ["descend", "ascend"],
             render: (text, record) => {
                 return moment(record.created_at).format("YYYY-MM-DD");
             }
@@ -159,16 +173,42 @@ const PageUsers = () => {
         labelCol: { span: 8 },
         wrapperCol: { span: 16 }
     };
+
+    const handleSearch = e => {
+        console.log(e.target.value);
+        fetchData("POST", "api/user/search", {
+            search: e.target.value
+        }).then(res => {
+            if (res.success) {
+                console.log(res);
+
+                setUsersList(res.data);
+            }
+        });
+    };
     return (
         <div>
             <Title levle={4}>Users</Title>
             {userdata.role != "Artist" && (
-                <Button
-                    type="primary"
-                    onClick={e => toggleShowModalAddEditUser()}
-                >
-                    New
-                </Button>
+                <Row>
+                    <Col xs={24} sm={24} md={24} lg={4} xl={4}>
+                        <Button
+                            type="primary"
+                            onClick={e => toggleShowModalAddEditUser()}
+                        >
+                            New
+                        </Button>
+                    </Col>
+                    <Col xs={24} sm={24} md={24} lg={8} xl={8}></Col>
+                    <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                        <Search
+                            placeholder="Search"
+                            onSearch={value => console.log(value)}
+                            onChange={e => handleSearch(e)}
+                            size="large"
+                        />
+                    </Col>
+                </Row>
             )}
 
             <Card className="mt-10">
