@@ -82,7 +82,7 @@ const CardSongToDisplay = ({ artistInfo }) => {
                     .replace(" ", "_")
                     .toLowerCase()}`}</Text>
             </Tooltip>
-            <br />
+            {/* <br />
             <Link
                 to={`/artist/${artistInfo.artist.song_title
                     .replace(" ", "_")
@@ -90,7 +90,7 @@ const CardSongToDisplay = ({ artistInfo }) => {
                 target="_blank"
             >
                 {">"} FollowFast Link {"<"}
-            </Link>
+            </Link> */}
             {/* {console.log(artistInfo)} */}
         </Card>
     );
