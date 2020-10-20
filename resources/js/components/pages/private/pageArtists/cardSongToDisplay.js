@@ -83,7 +83,12 @@ const CardSongToDisplay = ({ artistInfo }) => {
                     .toLowerCase()}`}</Text>
             </Tooltip>
             <br />
-            <Link to={`/artist/${artistInfo.id}`} target="_blank">
+            <Link
+                to={`/artist/${artistInfo.artist.song_title
+                    .replace(" ", "_")
+                    .toLowerCase()}`}
+                target="_blank"
+            >
                 {">"} FollowFast Link {"<"}
             </Link>
             {/* {console.log(artistInfo)} */}
