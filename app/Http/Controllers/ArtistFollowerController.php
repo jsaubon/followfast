@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ArtistFollower;
 use Illuminate\Http\Request;
+use Ixudra\Curl\Facades\Curl;
 
 class ArtistFollowerController extends Controller
 {
@@ -50,6 +51,24 @@ class ArtistFollowerController extends Controller
                 'platform' => $request->platform,
                 'user_url' => $request->user_url,
             ]);
+            
+            $data = [
+                "api_key" => "pk_09264a59a51492060d75fb1165ac100954",
+                "profiles" => [
+                    [
+                        "platform" =>  $request->platform,
+                        "user_url" =>  $request->user_url,
+                        "email" =>  $request->email,
+                        "name" =>  $request->display_name,
+                    ]
+                ]
+            ];
+            
+            $response = Curl::to('https://a.klaviyo.com/api/v2/list/XxLXUR/members')
+                ->withHeader('Content-Type: application/json')
+                ->withData(json_encode($data))
+                ->post();
+            // return json_decode($response, true);
             return response()->json([
                 'success' => true,
                 'data' => $artist_follower
@@ -83,6 +102,8 @@ class ArtistFollowerController extends Controller
                 'platform' => $request->platform,
                 'user_url' => $request->user_url,
             ]);
+
+            
             return response()->json([
                 'success' => true,
                 'data' => $artist_follower

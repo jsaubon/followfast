@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Ixudra\Curl\Facades\Curl;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,4 +31,26 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResource('artist_account','ArtistAccountController');
     Route::apiResource('artist_social','ArtistSocialController');
     Route::apiResource('artist_follower','ArtistFollowerController');
+});
+
+Route::get('test',function() {
+
+    $data = [
+        "api_key" => "pk_09264a59a51492060d75fb1165ac100954",
+        "profiles" => [
+            [
+                "platform" =>  'Spotify',
+                "user_url" =>  'https://open.spotify.com/user/22dplpm42s3333424fa2miqmq',
+                "email" =>  'joshuasaubon@gmail.com',
+                "name" =>  'Joshua Saubon',
+            ]
+        ]
+    ];
+    
+    $response = Curl::to('https://a.klaviyo.com/api/v2/list/XxLXUR/members')
+        ->withHeader('Content-Type: application/json')
+        ->withData(json_encode($data))
+        ->post();
+
+        dd($response);
 });
