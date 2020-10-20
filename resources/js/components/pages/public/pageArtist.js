@@ -111,61 +111,87 @@ const pageArtist = props => {
                                         lg={24}
                                         xl={24}
                                     >
-                                        <PlatFormButton
-                                            buttonText="Spotify"
-                                            artist={artist}
-                                            platFormName="spotify"
-                                        />
-                                        <PlatFormButton
-                                            buttonText="Apple Music"
-                                            artist={artist}
-                                            platFormName="applemusic"
-                                        />
-                                        <PlatFormButton
-                                            buttonText="iTunes"
-                                            artist={artist}
-                                            platFormName="iTunes"
-                                        />
-                                        <PlatFormButton
-                                            buttonText="Google Play/Youtube"
-                                            artist={artist}
-                                            platFormName="googleplay"
-                                        />
-                                        <PlatFormButton
-                                            buttonText="Amazon"
-                                            artist={artist}
-                                            platFormName="amazon"
-                                        />
-                                        <PlatFormButton
-                                            buttonText="Tidal"
-                                            artist={artist}
-                                            platFormName="tidal"
-                                        />
-                                        <PlatFormButton
-                                            buttonText="Deezer"
-                                            artist={artist}
-                                            platFormName="deezer"
-                                        />
-                                        <PlatFormButton
-                                            buttonText="Microsoft Groove"
-                                            artist={artist}
-                                            platFormName="microsoftgroove"
-                                        />
-                                        <PlatFormButton
-                                            buttonText="Napster"
-                                            artist={artist}
-                                            platFormName="napsterr"
-                                        />
-                                        <PlatFormButton
-                                            buttonText="Shazam"
-                                            artist={artist}
-                                            platFormName="shazam"
-                                        />
-                                        <PlatFormButton
-                                            buttonText="iHeartRadio"
-                                            artist={artist}
-                                            platFormName="iheartradio"
-                                        />
+                                        {artist.artist_account.spotify_id && (
+                                            <PlatFormButton
+                                                buttonText="Spotify"
+                                                artist={artist}
+                                                platFormName="spotify"
+                                            />
+                                        )}
+
+                                        {artist.artist_account.apple_id && (
+                                            <PlatFormButton
+                                                buttonText="Apple Music"
+                                                artist={artist}
+                                                platFormName="applemusic"
+                                            />
+                                        )}
+                                        {artist.artist_account.itunes_id && (
+                                            <PlatFormButton
+                                                buttonText="iTunes"
+                                                artist={artist}
+                                                platFormName="iTunes"
+                                            />
+                                        )}
+
+                                        {artist.artist_account.google_id && (
+                                            <PlatFormButton
+                                                buttonText="Google Play/Youtube"
+                                                artist={artist}
+                                                platFormName="googleplay"
+                                            />
+                                        )}
+                                        {artist.artist_account.amazon_id && (
+                                            <PlatFormButton
+                                                buttonText="Amazon"
+                                                artist={artist}
+                                                platFormName="amazon"
+                                            />
+                                        )}
+                                        {artist.artist_account.tidal_id && (
+                                            <PlatFormButton
+                                                buttonText="Tidal"
+                                                artist={artist}
+                                                platFormName="tidal"
+                                            />
+                                        )}
+                                        {artist.artist_account.Deezer_id && (
+                                            <PlatFormButton
+                                                buttonText="Deezer"
+                                                artist={artist}
+                                                platFormName="deezer"
+                                            />
+                                        )}
+                                        {artist.artist_account.microsoft_id && (
+                                            <PlatFormButton
+                                                buttonText="Microsoft Groove"
+                                                artist={artist}
+                                                platFormName="microsoftgroove"
+                                            />
+                                        )}
+                                        {artist.artist_account.napster_id && (
+                                            <PlatFormButton
+                                                buttonText="Napster"
+                                                artist={artist}
+                                                platFormName="napsterr"
+                                            />
+                                        )}
+                                        {artist.artist_account.shazam_id && (
+                                            <PlatFormButton
+                                                buttonText="Shazam"
+                                                artist={artist}
+                                                platFormName="shazam"
+                                            />
+                                        )}
+                                        {artist.artist_account
+                                            .iheartradio_id && (
+                                            <PlatFormButton
+                                                buttonText="iHeartRadio"
+                                                artist={artist}
+                                                platFormName="iheartradio"
+                                            />
+                                        )}
+
                                         <PoweredBy />
                                     </Col>
                                 </Row>
