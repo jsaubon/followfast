@@ -31,6 +31,9 @@ const LayoutContent = () => {
                             component={PageArtistProfile}
                         />
                         <Route exact path="/users" component={PageUsers} />
+                        <Route path="/" exact>
+                            <Redirect to="/artists" />
+                        </Route>
                     </Switch>
                 </div>
             </Content>
