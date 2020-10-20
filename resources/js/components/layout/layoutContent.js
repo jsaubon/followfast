@@ -1,8 +1,8 @@
 import React, { useEffect, useContext } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { Layout, Breadcrumb } from "antd";
-import LayoutHeader from "./LayoutHeader";
-import LayoutFooter from "./LayoutFooter";
+import LayoutHeader from "./layoutHeader";
+import LayoutFooter from "./layoutFooter";
 import PageUsers from "../pages/private/pageUsers/pageUsers";
 import PageArtists from "../pages/private/pageArtists/pageArtists";
 
