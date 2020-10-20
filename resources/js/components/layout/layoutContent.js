@@ -11,7 +11,7 @@ import PageArtistProfile from "../pages/private/pageArtists/pageArtistProfile";
 const LayoutContent = () => {
     const { Content } = Layout;
     let userdata = JSON.parse(localStorage.userdata);
-    console.log(userdata.role);
+    // console.log(userdata.role);
     return (
         <Layout className="layout">
             <LayoutHeader />
