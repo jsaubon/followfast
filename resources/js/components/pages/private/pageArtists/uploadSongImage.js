@@ -69,7 +69,7 @@ const UploadSongImage = ({ setArtistInfo, artistInfo }) => {
                 {artistInfo.song_image ? (
                     <img
                         src={
-                            artistInfo.song_image.indexOf("http") === -1
+                            artistInfo.song_image.indexOf("data:image") === -1
                                 ? window.location.origin +
                                   "/" +
                                   artistInfo.song_image
