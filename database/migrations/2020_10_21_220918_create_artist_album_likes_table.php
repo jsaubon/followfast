@@ -16,6 +16,7 @@ class CreateArtistAlbumLikesTable extends Migration
         Schema::create('artist_album_likes', function (Blueprint $table) {
             $table->id();
             $table->integer('artist_id')->unsigned();
+            $table->integer('album_id');
             $table->string('album_name');
             $table->string('display_name');
             $table->string('email');
