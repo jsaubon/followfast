@@ -42,7 +42,8 @@ Route::get('test',function() {
                 "platform" =>  'Spotify',
                 "user_url" =>  'https://open.spotify.com/user/22dplpm42s3333424fa2miqmq',
                 "email" =>  'joshuasaubon@gmail.com',
-                "name" =>  'Joshua Saubon',
+                "first_name" =>  'Joshua',
+                "last_name" =>  'Saubon',
             ]
         ]
     ];

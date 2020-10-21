@@ -63,6 +63,15 @@ class ArtistFollowerController extends Controller
             ],200);
         } 
     }
+
+    private function split_name($name) {
+        $name = trim($name);
+        $last_name = (strpos($name, ' ') === false) ? '' : preg_replace('#.*\s([\w-]*)$#', '$1', $name);
+        $first_name = trim( preg_replace('#'.$last_name.'#', '', $name ) );
+        return array($first_name, $last_name);
+    }
+
+
     public function follow(Request $request)
     {
         $this->validate($request, [
@@ -86,6 +95,10 @@ class ArtistFollowerController extends Controller
                 'user_url' => $request->user_url,
             ]);
 
+            $display_name = split_name($request->display_name);
+            $first_name = $display_name[0];
+            $last_name = $display_name[1];
+
             $data = [
                 "api_key" => "pk_09264a59a51492060d75fb1165ac100954",
                 "profiles" => [
@@ -93,7 +106,8 @@ class ArtistFollowerController extends Controller
                         "platform" =>  $request->platform,
                         "user_url" =>  $request->user_url,
                         "email" =>  $request->email,
-                        "name" =>  $request->display_name,
+                        "first_name" =>  $first_name,
+                        'last_name' => $last_name
                     ]
                 ]
             ];
