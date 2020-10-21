@@ -4,7 +4,7 @@ import Title from "antd/lib/typography/Title";
 import React from "react";
 import { copyToClipboard } from "../copyToClipboard";
 
-const TabSpotifyAlbums = ({ spotifyAlbums }) => {
+const TabSpotifyAlbums = ({ spotifyAlbums, artistInfo }) => {
     return (
         <>
             <Title level={4}>Albums</Title>

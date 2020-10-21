@@ -298,6 +298,9 @@ const PageArtistProfile = ({ match, history, location }) => {
                                                             spotifyAlbums={
                                                                 spotifyAlbums
                                                             }
+                                                            artistInfo={
+                                                                artistInfo
+                                                            }
                                                         />
                                                     </Tabs.TabPane>
                                                     <Tabs.TabPane

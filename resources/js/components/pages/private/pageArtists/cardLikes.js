@@ -1,4 +1,4 @@
-import { Card, Input, Table } from "antd";
+import { Avatar, Card, Input, Table } from "antd";
 import Title from "antd/lib/typography/Title";
 import React from "react";
 import moment from "moment";
@@ -19,26 +19,19 @@ const CardLikes = ({ handleSearchLike, artistInfo }) => {
                         dataIndex="platform"
                         key="platform"
                     />
-                    <Table.Column
-                        title="Album Image"
-                        dataIndex="album_image"
-                        key="album_image"
-                        render={(text, record) => {
-                            return (
-                                <img
-                                    src={record.album_image}
-                                    style={{
-                                        width: "50px",
-                                        borderRadius: "12px"
-                                    }}
-                                ></img>
-                            );
-                        }}
-                    />
+
                     <Table.Column
                         title="Album Name"
                         dataIndex="album_name"
                         key="album_name"
+                        render={(text, record) => {
+                            return (
+                                <div style={{ whiteSpace: "nowrap" }}>
+                                    <Avatar src={record.album_image} />{" "}
+                                    <a href={`https://open.spotify.com/album/${record.album_id}`}>{record.album_name}</a>
+                                </div>
+                            );
+                        }}
                     />
                     <Table.Column
                         title="Name"
