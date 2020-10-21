@@ -1,4 +1,4 @@
-import { Avatar, Table, Tooltip } from "antd";
+import { Avatar, message, Table, Tooltip } from "antd";
 import Text from "antd/lib/typography/Text";
 import Title from "antd/lib/typography/Title";
 import React from "react";
