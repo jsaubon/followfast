@@ -120,7 +120,9 @@ const PageArtistProfile = ({ match, history, location }) => {
         var spotifyApi = new SpotifyWebApi();
         spotifyApi.setAccessToken(localStorage.spotify_token);
         spotifyApi
-            .getArtistAlbums(artistInfo.artist.artist_account.spotify_id)
+            .getArtistAlbums(artistInfo.artist.artist_account.spotify_id, {
+                limit: 50
+            })
             .then(res => {
                 console.log(res.items);
                 setSpotifyAlbums(res.items);
@@ -261,7 +263,6 @@ const PageArtistProfile = ({ match, history, location }) => {
                                         ) : (
                                             <>
                                                 <Table
-                                                    pagination={false}
                                                     dataSource={spotifyAlbums}
                                                     size="small"
                                                 >
