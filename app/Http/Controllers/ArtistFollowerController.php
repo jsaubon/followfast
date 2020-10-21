@@ -124,7 +124,7 @@ class ArtistFollowerController extends Controller
             ]
         ];
 
-        $response = Curl::to('https://a.klaviyo.com/api/v2/list/XxLXUR/members')
+        $response = Curl::to('https://a.klaviyo.com/api/v2/list/'.$list_id.'/members')
             ->withHeader('Content-Type: application/json')
             ->withData(json_encode($data))
             ->post();
