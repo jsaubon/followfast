@@ -35,7 +35,7 @@ const PageArtistAlbum = ({ match }) => {
     const [artistInfo, setArtistInfo] = useState();
     useEffect(() => {
         if (localStorage.spotify_token) {
-            fetchData("GET", "api/artist/" + match.params.id)
+            fetchData("GET", "api/artist/public/" + match.params.id)
                 .then(res => {
                     if (res.success) {
                         setArtistInfo(res.data);
