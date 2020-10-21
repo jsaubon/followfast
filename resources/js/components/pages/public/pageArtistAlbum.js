@@ -128,8 +128,9 @@ const PageArtistAlbum = ({ match }) => {
             fetchData("POST", "api/artist/album/like", data).then(
                 res => {
                     // MAO NI PARA MA REDIRECT DIDTO SA SPOTIFY
-                    window.location.href =
-                    "https://open.spotify.com/album/" + album_id;
+                    // E UNCOMMENT NI PAGHUMAN NMO SA ArtistAlbumLike
+                    // window.location.href =
+                    // "https://open.spotify.com/album/" + album_id;
                 }
             );
 
