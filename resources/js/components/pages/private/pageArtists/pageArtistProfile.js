@@ -69,7 +69,7 @@ const PageArtistProfile = ({ match, history, location }) => {
     const getArtist = () => {
         fetchData("GET", "api/artist/" + match.params.id).then(res => {
             setArtistInfo(res.data);
-            // console.log(res.data);
+            console.log("the data", res.data);
             if (localStorage.spotify_token) {
                 getSpotifyAlbums(res.data);
             }
@@ -99,6 +99,24 @@ const PageArtistProfile = ({ match, history, location }) => {
                 setArtistInfo({
                     ...artistInfo,
                     artist: { ...artistInfo.artist, artist_followers: res.data }
+                });
+            }
+        });
+    };
+
+    const handleSearchLike = e => {
+        fetchData(
+            "GET",
+            `api/artist_album_like/${artistInfo.artist.id}?search=${e.target.value}`
+        ).then(res => {
+            if (res.success) {
+                console.log(res);
+                setArtistInfo({
+                    ...artistInfo,
+                    artist: {
+                        ...artistInfo.artist,
+                        artist_album_like: res.data
+                    }
                 });
             }
         });
@@ -399,6 +417,77 @@ const PageArtistProfile = ({ match, history, location }) => {
                                     />
                                     <Table.Column
                                         title="Followed At"
+                                        dataIndex="created_at"
+                                        key="created_at"
+                                        render={(text, record) => {
+                                            return moment(
+                                                record.created_at
+                                            ).format("YYYY-MM-DD hh:mm A");
+                                        }}
+                                    />
+                                </Table>
+                            </Card>
+                            <Card className="mt-10 ">
+                                <Title level={4}>Likes</Title>
+                                <Input.Search
+                                    placeholder="Search here"
+                                    onChange={e => handleSearchLike(e)}
+                                />
+                                <br />
+                                <br />
+                                <Table
+                                    dataSource={
+                                        artistInfo.artist.artist_album_like
+                                    }
+                                >
+                                    <Table.Column
+                                        title="Platform"
+                                        dataIndex="platform"
+                                        key="platform"
+                                    />
+                                    <Table.Column
+                                        title="Album Image"
+                                        dataIndex="album_image"
+                                        key="album_image"
+                                        render={(text, record) => {
+                                            return (
+                                                <img
+                                                    src={record.album_image}
+                                                    style={{
+                                                        width: "50px",
+                                                        borderRadius: "12px"
+                                                    }}
+                                                ></img>
+                                            );
+                                        }}
+                                    />
+                                    <Table.Column
+                                        title="Album Name"
+                                        dataIndex="album_name"
+                                        key="album_name"
+                                    />
+                                    <Table.Column
+                                        title="Name"
+                                        dataIndex="display_name"
+                                        key="display_name"
+                                        render={(text, record) => {
+                                            return (
+                                                <a
+                                                    target="_blank"
+                                                    href={record.user_url}
+                                                >
+                                                    {record.display_name}
+                                                </a>
+                                            );
+                                        }}
+                                    />
+                                    <Table.Column
+                                        title="Email"
+                                        dataIndex="email"
+                                        key="email"
+                                    />
+                                    <Table.Column
+                                        title="Likes At"
                                         dataIndex="created_at"
                                         key="created_at"
                                         render={(text, record) => {

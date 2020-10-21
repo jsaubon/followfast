@@ -94,14 +94,13 @@ const PageArtistAlbum = ({ match }) => {
             });
     };
 
-    const followAlbum = (album_id,me) => {
+    const followAlbum = (album_id, me) => {
         var spotifyApi = new SpotifyWebApi();
         spotifyApi.setAccessToken(localStorage.spotify_token);
         spotifyApi
             .addToMySavedAlbums([album_id])
             .then(res => {
                 getAlbumInfo(album_id, me);
-                
             })
             .catch(err => {
                 message.error(
@@ -118,23 +117,20 @@ const PageArtistAlbum = ({ match }) => {
             let data = {
                 artist_id: artistInfo.artist.id,
                 album_name: res.name,
+                album_image: res.images[0].url,
                 display_name: me.display_name,
                 email: me.email,
                 user_url: me.external_urls.spotify,
                 platform: "Spotify"
-            }
+            };
             // PAGHIMO UG MODEL NGA ArtistAlbumLike
             // PAGHIMO SAB UG CONTROLLER NYA ROUTE
-            fetchData("POST", "api/artist/album/like", data).then(
-                res => {
-                    // MAO NI PARA MA REDIRECT DIDTO SA SPOTIFY
-                    // E UNCOMMENT NI PAGHUMAN NMO SA ArtistAlbumLike
-                    // window.location.href =
-                    // "https://open.spotify.com/album/" + album_id;
-                }
-            );
-
-            
+            fetchData("POST", "api/artist_album_like", data).then(res => {
+                // MAO NI PARA MA REDIRECT DIDTO SA SPOTIFY
+                // E UNCOMMENT NI PAGHUMAN NMO SA ArtistAlbumLike
+                window.location.href =
+                    "https://open.spotify.com/album/" + album_id;
+            });
         });
     };
 
