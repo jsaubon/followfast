@@ -154,7 +154,6 @@ class ArtistFollowerController extends Controller
             $this->addToKlavio($request);
             return response()->json([
                 'success' => true,
-                'data' => $response
             ],200);
         } else {
             return response()->json([
