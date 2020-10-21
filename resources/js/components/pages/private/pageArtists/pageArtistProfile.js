@@ -58,7 +58,7 @@ const PageArtistProfile = ({ match, history, location }) => {
         if (location.artist) {
             setArtistInfo(location.artist);
             if (localStorage.spotify_token) {
-                getSpotifyAlbums(res.data);
+                getSpotifyAlbums(location.artist);
             }
         } else {
             getArtist();
