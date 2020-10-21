@@ -60,8 +60,12 @@ const CardLikes = ({ handleSearchLike, artistInfo }) => {
                             dataIndex="created_at"
                             key="created_at"
                             render={(text, record) => {
-                                return moment(record.created_at).format(
-                                    "YYYY-MM-DD hh:mm A"
+                                return (
+                                    <div style={{ whiteSpace: "nowrap" }}>
+                                        {moment(record.created_at).format(
+                                            "YYYY-MM-DD hh:mm A"
+                                        )}
+                                    </div>
                                 );
                             }}
                         />
