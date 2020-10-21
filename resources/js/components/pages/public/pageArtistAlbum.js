@@ -88,27 +88,53 @@ const PageArtistAlbum = ({ match }) => {
                     res => {
                         console.log(res, "followed");
                         console.log(match.params.album);
-                        followAlbum(match.params.album);
+                        followAlbum(match.params.album, me);
                     }
                 );
             });
     };
 
-    const followAlbum = album_id => {
+    const followAlbum = (album_id,me) => {
         var spotifyApi = new SpotifyWebApi();
         spotifyApi.setAccessToken(localStorage.spotify_token);
-        console.log(album_id);
         spotifyApi
             .addToMySavedAlbums([album_id])
             .then(res => {
-                window.location.href =
-                    "https://open.spotify.com/album/" + album_id;
+                getAlbumInfo(album_id, me);
+                
             })
             .catch(err => {
                 message.error(
                     "Error, could not add this album, please try again."
                 );
             });
+    };
+
+    const getAlbumInfo = (album_id, me) => {
+        var spotifyApi = new SpotifyWebApi();
+        spotifyApi.setAccessToken(localStorage.spotify_token);
+        spotifyApi.getAlbum(album_id).then(res => {
+            console.log(res);
+            let data = {
+                artist_id: artistInfo.artist.id,
+                album_name: res.name,
+                display_name: me.display_name,
+                email: me.email,
+                user_url: me.external_urls.spotify,
+                platform: "Spotify"
+            }
+            // PAGHIMO UG MODEL NGA ArtistAlbumLike
+            // PAGHIMO SAB UG CONTROLLER NYA ROUTE
+            fetchData("POST", "api/artist/album/like", data).then(
+                res => {
+                    // MAO NI PARA MA REDIRECT DIDTO SA SPOTIFY
+                    window.location.href =
+                    "https://open.spotify.com/album/" + album_id;
+                }
+            );
+
+            
+        });
     };
 
     const goToSpotifyLogin = () => {
