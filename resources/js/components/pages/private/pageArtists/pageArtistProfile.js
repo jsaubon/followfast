@@ -4,6 +4,8 @@ import {
     FacebookOutlined,
     InstagramOutlined,
     LeftOutlined,
+    LoginOutlined,
+    LogoutOutlined,
     TwitterOutlined,
     YoutubeOutlined
 } from "@ant-design/icons";
@@ -32,6 +34,9 @@ import CardSongToDisplay from "./cardSongToDisplay";
 import moment from "moment";
 import SpotifyWebApi from "spotify-web-api-js";
 import { copyToClipboard } from "./copyToClipboard";
+import { Tab } from "bootstrap";
+import TabSpotifyAlbums from "./tabsSpotify/tabSpotifyAlbums";
+import CardFollowers from "./cardFollowers";
 export const authEndpoint = "https://accounts.spotify.com/authorize";
 const artistInfo = localStorage.artist ? JSON.parse(localStorage.artist) : "";
 const clientId = "09f5bed2a09e492e93979f2a45b90d39";
@@ -248,106 +253,43 @@ const PageArtistProfile = ({ match, history, location }) => {
                         </Col>
                         <Col xs={24} md={14} className="pr-0">
                             <Card className="mt-10 ">
-                                <Title level={4}>Albums</Title>
                                 <Tabs
+                                    tabPosition="left"
+                                    // type="card"
                                     defaultActiveKey="1"
                                     onChange={tabCallback}
                                 >
                                     <Tabs.TabPane tab="Spotify" key="1">
                                         {!localStorage.spotify_token ? (
                                             <Button
+                                                type="primary"
+                                                icon={<LoginOutlined />}
                                                 onClick={e => loginToSpotify()}
                                             >
                                                 Signin to Spotify
                                             </Button>
                                         ) : (
                                             <>
-                                                <Table
-                                                    dataSource={spotifyAlbums}
-                                                    size="small"
-                                                >
-                                                    <Table.Column
-                                                        title="Album Name"
-                                                        dataIndex="name"
-                                                        key="name"
-                                                        render={(
-                                                            text,
-                                                            record
-                                                        ) => {
-                                                            return (
-                                                                <>
-                                                                    <Avatar
-                                                                        src={
-                                                                            record
-                                                                                .images[0]
-                                                                                .url
-                                                                        }
-                                                                    />{" "}
-                                                                    {
-                                                                        record.name
-                                                                    }
-                                                                </>
-                                                            );
-                                                        }}
-                                                    />
-                                                    <Table.Column
-                                                        title="Release Date"
-                                                        dataIndex="release_date"
-                                                        key="release_date"
-                                                    />
-
-                                                    <Table.Column
-                                                        title="Link"
-                                                        dataIndex="link"
-                                                        key="link"
-                                                        render={(
-                                                            text,
-                                                            record
-                                                        ) => {
-                                                            return (
-                                                                <Tooltip
-                                                                    title="Click to Copy to Clipboard"
-                                                                    onClick={e => {
-                                                                        message.success(
-                                                                            "Link Copied to Clipboard"
-                                                                        );
-                                                                        copyToClipboard(
-                                                                            `${window.location.origin}/artist/${artistInfo.id}/album/${record.id}`
-                                                                        );
-                                                                    }}
-                                                                >
-                                                                    <Text
-                                                                        style={{
-                                                                            cursor:
-                                                                                "pointer",
-                                                                            color:
-                                                                                "blue"
-                                                                        }}
-                                                                    >
-                                                                        Click
-                                                                        here to
-                                                                        Copy
-                                                                        Link
-                                                                    </Text>
-                                                                </Tooltip>
-                                                            );
-                                                        }}
-                                                    />
-                                                </Table>
-                                                <br />
-                                                <Button
-                                                    onClick={e => {
-                                                        localStorage.removeItem(
-                                                            "logged_spotify_id"
-                                                        );
-                                                        localStorage.removeItem(
-                                                            "spotify_token"
-                                                        );
-                                                        getArtist();
-                                                    }}
-                                                >
-                                                    Logout to Spotify
-                                                </Button>
+                                                <Tabs defaultActiveKey="tab_spotify_1">
+                                                    <Tabs.TabPane
+                                                        tab="Albums"
+                                                        key="tab_spotify_1"
+                                                    >
+                                                        <TabSpotifyAlbums
+                                                            spotifyAlbums={
+                                                                spotifyAlbums
+                                                            }
+                                                        />
+                                                    </Tabs.TabPane>
+                                                    <Tabs.TabPane
+                                                        tab="Tracks"
+                                                        key="tab_spotify_2"
+                                                    >
+                                                        <Title level={4}>
+                                                            Tracks
+                                                        </Title>
+                                                    </Tabs.TabPane>
+                                                </Tabs>
                                             </>
                                         )}
                                     </Tabs.TabPane>
@@ -359,56 +301,10 @@ const PageArtistProfile = ({ match, history, location }) => {
                                     </Tabs.TabPane>
                                 </Tabs>
                             </Card>
-                            <Card className="mt-10 ">
-                                <Title level={4}>Followers</Title>
-                                <Input.Search
-                                    placeholder="Search here"
-                                    onChange={e => handleSearchFollower(e)}
-                                />
-                                <br />
-                                <br />
-                                <Table
-                                    dataSource={
-                                        artistInfo.artist.artist_followers
-                                    }
-                                >
-                                    <Table.Column
-                                        title="Platform"
-                                        dataIndex="platform"
-                                        key="platform"
-                                    />
-                                    <Table.Column
-                                        title="Name"
-                                        dataIndex="display_name"
-                                        key="display_name"
-                                        render={(text, record) => {
-                                            return (
-                                                <a
-                                                    target="_blank"
-                                                    href={record.user_url}
-                                                >
-                                                    {record.display_name}
-                                                </a>
-                                            );
-                                        }}
-                                    />
-                                    <Table.Column
-                                        title="Email"
-                                        dataIndex="email"
-                                        key="email"
-                                    />
-                                    <Table.Column
-                                        title="Followed At"
-                                        dataIndex="created_at"
-                                        key="created_at"
-                                        render={(text, record) => {
-                                            return moment(
-                                                record.created_at
-                                            ).format("YYYY-MM-DD hh:mm A");
-                                        }}
-                                    />
-                                </Table>
-                            </Card>
+                            <CardFollowers
+                                handleSearchFollower={handleSearchFollower}
+                                artistInfo={artistInfo}
+                            />
                         </Col>
                     </Row>
                     <Divider />
