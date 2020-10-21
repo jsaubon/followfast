@@ -126,7 +126,7 @@ const PageArtistAlbum = ({ match }) => {
             };
             // PAGHIMO UG MODEL NGA ArtistAlbumLike
             // PAGHIMO SAB UG CONTROLLER NYA ROUTE
-            fetchData("POST", "api/artist_album_like", data).then(res => {
+            fetchData("POST", "api/artist_album_like/like", data).then(res => {
                 // MAO NI PARA MA REDIRECT DIDTO SA SPOTIFY
                 // E UNCOMMENT NI PAGHUMAN NMO SA ArtistAlbumLike
                 window.location.href =
