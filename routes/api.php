@@ -45,16 +45,19 @@ Route::get('test',function() {
         ->withHeader('Content-Type: application/json')
         ->get();
     $lists = json_decode($lists, true);
-    $list_names = array_column($lists, 'list_name');
-    $artist_list = array_search($user->name. ' followers',$list_names);
-    
-    // dd($lists[$artist_list]);
+    $artist_list = false;
+    foreach ($lists as $key => $list) {
+        if($list['list_name'] == $user->name.' followers') {
+            $artist_list = $list;
+        }
+    }
+    // dd($artist_list);
     if($artist_list) {
         $list_id = $lists[$artist_list]['list_id'];
     } else {
         $data = [
             "api_key" => "pk_09264a59a51492060d75fb1165ac100954",
-            "list_name" => $user->name. ' followers'
+            "list_name" => $user->name.' followers'
         ];
         
         $newList = Curl::to('https://a.klaviyo.com/api/v2/lists')
@@ -65,6 +68,7 @@ Route::get('test',function() {
         $newList = json_decode($newList, true);
         $list_id = $newList['list_id'];
     }
+
     $data = [
         "api_key" => "pk_09264a59a51492060d75fb1165ac100954",
         "profiles" => [

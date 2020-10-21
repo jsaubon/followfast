@@ -64,6 +64,7 @@ const PlatformSpotify = () => {
                                 "api/artist_follower/follow",
                                 data
                             ).then(res => {
+                                console.log(res);
                                 // location.href =
                                 //     "https://open.spotify.com/artist/" +
                                 //     artistInfo.artist_account.spotify_id;
