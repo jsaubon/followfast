@@ -64,8 +64,8 @@ const PageArtistAlbum = ({ match }) => {
                 })
                 .catch(err => {
                     console.log(err);
-                    // localStorage.removeItem("spotify_token");
-                    // location.reload();
+                    localStorage.removeItem("spotify_token");
+                    location.reload();
                 });
         }
         return () => {};
