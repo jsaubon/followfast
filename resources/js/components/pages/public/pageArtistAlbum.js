@@ -12,7 +12,7 @@ const scopes = [
     // "user-follow-read",
     "user-follow-modify",
     // "user-library-read",
-    // "user-library-modify",
+    "user-library-modify",
     "user-read-email"
 ];
 // window.location.hash = "";
