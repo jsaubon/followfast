@@ -104,7 +104,7 @@ class ArtistFollowerController extends Controller
             $list_id = $newList['list_id'];
         }
 
-        $display_name = split_name($request->display_name);
+        $display_name = $this->split_name($request->display_name);
         $first_name = $display_name[0];
         $last_name = $display_name[1];
 
