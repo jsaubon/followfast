@@ -11,6 +11,9 @@ import StateProvider from "./Provider";
 import Login from "./components/pages/public/login";
 import PageArtist from "./components/pages/public/pageArtist";
 import PlatformSpotify from "./components/pages/public/platforms/platformSpotify";
+import PageArtistAlbum from "./components/pages/public/pageArtistAlbum";
+import PlatformSpotifyCallback from "./components/pages/public/platforms/platformSpotifyCallback";
+import Page404 from "./components/pages/public/page404";
 
 const App = () => {
     let isLogged = localStorage.getItem("token");
@@ -41,6 +44,19 @@ const App = () => {
                         exact
                         component={PlatformSpotify}
                     />
+                    <Route
+                        exact
+                        path="/platform/spotify/callback"
+                        component={PlatformSpotifyCallback}
+                    />
+
+                    <Route
+                        path="/artist/:id/album/:album"
+                        name="Artist Album"
+                        exact
+                        component={PageArtistAlbum}
+                    />
+                    <Route exact path="/404" component={Page404} />
                     <Route
                         path="/"
                         name="Home"

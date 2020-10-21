@@ -25,6 +25,8 @@ const LayoutContent = () => {
                 >
                     <Switch>
                         <Route exact path="/artists" component={PageArtists} />
+
+                        
                         <Route
                             exact
                             path="/artist/profile/:id"

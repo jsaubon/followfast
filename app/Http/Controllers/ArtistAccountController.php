@@ -61,21 +61,27 @@ class ArtistAccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        $artist_account = ArtistAccount::find($id);
+    public function show($id,Request $request)
+    {   
+        if(isset($request->spotify)) {
+            $artist_account = ArtistAccount::where('spotify_id',$id)->with(['artist','artist.user'])->get();    
+        } else {
+            $artist_account = ArtistAccount::find($id);
+        }
+        
 
 
         if (!$artist_account) {
             return response()->json([
                 'success' => false,
-                'message' => 'Artist Accounts with id ' . $id . ' not found'
+                'message' => 'Artist Accounts with id ' . $id . ' not found',
+                'request' => $request->all()
             ], 400);
         }
 
         return response()->json([
             'success' => true,
-            'data' => $artist_account
+            'data' => $artist_account->first()
         ],200);
     }
 
