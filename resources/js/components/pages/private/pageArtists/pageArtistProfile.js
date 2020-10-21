@@ -325,10 +325,9 @@ const PageArtistProfile = ({ match, history, location }) => {
                                 artistInfo={artistInfo}
                             />
                             <CardLikes
-                                handleSearchFollower={handleSearchFollower}
+                                handleSearchLike={handleSearchLike}
                                 artistInfo={artistInfo}
                             />
-                            
                         </Col>
                     </Row>
                     <Divider />
