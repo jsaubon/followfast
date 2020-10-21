@@ -81,7 +81,7 @@ class ArtistController extends Controller
     public function show($id)
     {
         $artist = \App\User::where('id',$id)->with(['artist' => function($q) {
-            $q->with(['artist_account','artist_social','artist_followers' => function($q1) {
+            $q->with(['artist_account','artist_social','artist_followers','artist_album_like' => function($q1) {
                 $q1->orderBy('created_at','desc');
             }]);
         }])->first();

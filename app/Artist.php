@@ -21,4 +21,8 @@ class Artist extends Model
     public function artist_followers() {
         return $this->hasMany('\App\ArtistFollower','artist_id');
     }
+
+    public function artist_album_like() {
+        return $this->hasMany('\App\ArtistAlbumLike','artist_id');
+    }
 }

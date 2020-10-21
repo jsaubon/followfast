@@ -37,6 +37,7 @@ import { copyToClipboard } from "./copyToClipboard";
 import { Tab } from "bootstrap";
 import TabSpotifyAlbums from "./tabsSpotify/tabSpotifyAlbums";
 import CardFollowers from "./cardFollowers";
+import CardLikes from "./cardLikes";
 export const authEndpoint = "https://accounts.spotify.com/authorize";
 const artistInfo = localStorage.artist ? JSON.parse(localStorage.artist) : "";
 const clientId = "09f5bed2a09e492e93979f2a45b90d39";
@@ -74,7 +75,7 @@ const PageArtistProfile = ({ match, history, location }) => {
     const getArtist = () => {
         fetchData("GET", "api/artist/" + match.params.id).then(res => {
             setArtistInfo(res.data);
-            // console.log(res.data);
+            console.log("the data", res.data);
             if (localStorage.spotify_token) {
                 getSpotifyAlbums(res.data);
             }
@@ -104,6 +105,24 @@ const PageArtistProfile = ({ match, history, location }) => {
                 setArtistInfo({
                     ...artistInfo,
                     artist: { ...artistInfo.artist, artist_followers: res.data }
+                });
+            }
+        });
+    };
+
+    const handleSearchLike = e => {
+        fetchData(
+            "GET",
+            `api/artist_album_like/${artistInfo.artist.id}?search=${e.target.value}`
+        ).then(res => {
+            if (res.success) {
+                console.log(res);
+                setArtistInfo({
+                    ...artistInfo,
+                    artist: {
+                        ...artistInfo.artist,
+                        artist_album_like: res.data
+                    }
                 });
             }
         });
@@ -305,6 +324,11 @@ const PageArtistProfile = ({ match, history, location }) => {
                                 handleSearchFollower={handleSearchFollower}
                                 artistInfo={artistInfo}
                             />
+                            <CardLikes
+                                handleSearchFollower={handleSearchFollower}
+                                artistInfo={artistInfo}
+                            />
+                            
                         </Col>
                     </Row>
                     <Divider />

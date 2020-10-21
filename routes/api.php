@@ -32,6 +32,7 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResource('artist_account','ArtistAccountController');
     Route::apiResource('artist_social','ArtistSocialController');
     Route::apiResource('artist_follower','ArtistFollowerController');
+    Route::apiResource('artist_album_like','ArtistAlbumLikeController');
 });
 
 Route::get('test',function() {
