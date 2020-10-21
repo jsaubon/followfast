@@ -27,6 +27,7 @@ const hash = window.location.hash
     }, {});
 
 const PlatformSpotify = () => {
+    console.log(hash);
     let spotify_token = localStorage.spotify_token;
     useEffect(() => {
         if (hash.access_token) {
