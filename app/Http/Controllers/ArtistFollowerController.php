@@ -91,7 +91,7 @@ class ArtistFollowerController extends Controller
         }
         // dd($artist_list);
         if($artist_list) {
-            $list_id = $lists[$artist_list]['list_id'];
+            $list_id = $artist_list['list_id'];
         } else {
             $data = [
                 "api_key" => "pk_09264a59a51492060d75fb1165ac100954",
