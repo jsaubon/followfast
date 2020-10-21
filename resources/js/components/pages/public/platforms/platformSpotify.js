@@ -27,6 +27,7 @@ const hash = window.location.hash
     }, {});
 
 const PlatformSpotify = () => {
+    console.log(hash);
     let spotify_token = localStorage.spotify_token;
     useEffect(() => {
         if (hash.access_token) {
@@ -59,13 +60,15 @@ const PlatformSpotify = () => {
                                 user_url: me.external_urls.spotify,
                                 platform: "Spotify"
                             };
-                            fetchData("POST", "api/artist_follower/follow", data).then(
-                                res => {
-                                    location.href =
-                                        "https://open.spotify.com/artist/" +
-                                        artistInfo.artist_account.spotify_id;
-                                }
-                            );
+                            fetchData(
+                                "POST",
+                                "api/artist_follower/follow",
+                                data
+                            ).then(res => {
+                                location.href =
+                                    "https://open.spotify.com/artist/" +
+                                    artistInfo.artist_account.spotify_id;
+                            });
                         });
                 })
                 .catch(err => {

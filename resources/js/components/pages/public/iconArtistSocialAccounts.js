@@ -28,7 +28,6 @@ const iconArtistSocialAccounts = artist => {
                         }
                         width={25}
                         style={{
-                            marginTop: "65px",
                             borderRadius: "12px",
                             cursor: "pointer"
                         }}
@@ -51,7 +50,6 @@ const iconArtistSocialAccounts = artist => {
                         }
                         width={25}
                         style={{
-                            marginTop: "65px",
                             borderRadius: "12px",
                             cursor: "pointer",
                             marginLeft: "5px"
@@ -76,7 +74,6 @@ const iconArtistSocialAccounts = artist => {
                         }
                         width={25}
                         style={{
-                            marginTop: "65px",
                             borderRadius: "12px",
                             cursor: "pointer",
                             marginLeft: "5px"
@@ -100,7 +97,6 @@ const iconArtistSocialAccounts = artist => {
                         }
                         width={25}
                         style={{
-                            marginTop: "65px",
                             borderRadius: "12px",
                             cursor: "pointer",
                             marginLeft: "5px"
