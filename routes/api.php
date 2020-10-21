@@ -34,7 +34,37 @@ Route::middleware('auth:api')->group(function () {
 });
 
 Route::get('test',function() {
-
+    $artist = \App\Artist::find(1);
+    $user = $artist->user;
+    $data = [
+            "api_key" => "pk_09264a59a51492060d75fb1165ac100954",
+        ];
+        
+    $lists = Curl::to('https://a.klaviyo.com/api/v2/lists')
+        ->withData($data)
+        ->withHeader('Content-Type: application/json')
+        ->get();
+    $lists = json_decode($lists, true);
+    $list_names = array_column($lists, 'list_name');
+    $artist_list = array_search($user->name. ' followers',$list_names);
+    
+    // dd($lists[$artist_list]);
+    if($artist_list) {
+        $list_id = $lists[$artist_list]['list_id'];
+    } else {
+        $data = [
+            "api_key" => "pk_09264a59a51492060d75fb1165ac100954",
+            "list_name" => $user->name. ' followers'
+        ];
+        
+        $newList = Curl::to('https://a.klaviyo.com/api/v2/lists')
+            ->withData(json_encode($data))
+            ->withHeader('Content-Type: application/json')
+            ->post();
+        
+        $newList = json_decode($newList, true);
+        $list_id = $newList['list_id'];
+    }
     $data = [
         "api_key" => "pk_09264a59a51492060d75fb1165ac100954",
         "profiles" => [
@@ -48,7 +78,7 @@ Route::get('test',function() {
         ]
     ];
     
-    $response = Curl::to('https://a.klaviyo.com/api/v2/list/XxLXUR/members')
+    $response = Curl::to('https://a.klaviyo.com/api/v2/list/'.$list_id.'/members')
         ->withHeader('Content-Type: application/json')
         ->withData(json_encode($data))
         ->post();

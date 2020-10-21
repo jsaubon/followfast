@@ -71,6 +71,62 @@ class ArtistFollowerController extends Controller
         return array($first_name, $last_name);
     }
 
+    private function addToKlavio($request) {
+        $artist = \App\Artist::find($request->artist_id);
+        $user = $artist->user;
+        $data = [
+                "api_key" => "pk_09264a59a51492060d75fb1165ac100954",
+            ];
+            
+        $lists = Curl::to('https://a.klaviyo.com/api/v2/lists')
+            ->withData($data)
+            ->withHeader('Content-Type: application/json')
+            ->get();
+        $lists = json_decode($lists, true);
+        $list_names = array_column($lists, 'list_name');
+        $artist_list = array_search($user->name. ' followers',$list_names);
+        
+        // dd($lists[$artist_list]);
+        if($artist_list) {
+            $list_id = $lists[$artist_list]['list_id'];
+        } else {
+            $data = [
+                "api_key" => "pk_09264a59a51492060d75fb1165ac100954",
+                "list_name" => $user->name. ' followers'
+            ];
+            
+            $newList = Curl::to('https://a.klaviyo.com/api/v2/lists')
+                ->withData(json_encode($data))
+                ->withHeader('Content-Type: application/json')
+                ->post();
+            
+            $newList = json_decode($newList, true);
+            $list_id = $newList['list_id'];
+        }
+
+        $display_name = split_name($request->display_name);
+        $first_name = $display_name[0];
+        $last_name = $display_name[1];
+
+        $data = [
+            "api_key" => "pk_09264a59a51492060d75fb1165ac100954",
+            "profiles" => [
+                [
+                    "platform" =>  $request->platform,
+                    "user_url" =>  $request->user_url,
+                    "email" =>  $request->email,
+                    "first_name" =>  $first_name,
+                    'last_name' => $last_name
+                ]
+            ]
+        ];
+
+        $response = Curl::to('https://a.klaviyo.com/api/v2/list/XxLXUR/members')
+            ->withHeader('Content-Type: application/json')
+            ->withData(json_encode($data))
+            ->post();
+    }
+
 
     public function follow(Request $request)
     {
@@ -95,27 +151,7 @@ class ArtistFollowerController extends Controller
                 'user_url' => $request->user_url,
             ]);
 
-            $display_name = split_name($request->display_name);
-            $first_name = $display_name[0];
-            $last_name = $display_name[1];
-
-            $data = [
-                "api_key" => "pk_09264a59a51492060d75fb1165ac100954",
-                "profiles" => [
-                    [
-                        "platform" =>  $request->platform,
-                        "user_url" =>  $request->user_url,
-                        "email" =>  $request->email,
-                        "first_name" =>  $first_name,
-                        'last_name' => $last_name
-                    ]
-                ]
-            ];
-
-            $response = Curl::to('https://a.klaviyo.com/api/v2/list/XxLXUR/members')
-                ->withHeader('Content-Type: application/json')
-                ->withData(json_encode($data))
-                ->post();
+            $this->addToKlavio($request);
             return response()->json([
                 'success' => true,
                 'data' => $response
