@@ -46,10 +46,12 @@ class ArtistAlbumLikeController extends Controller
             'display_name' => 'required',
             'platform' => 'required',
             'user_url' => 'required',
-            'album_name'=>'required'
+            'album_name'=>'required',
+            'album_id'=>'required'
         ]);
 
         $artist_album_likes = ArtistAlbumLike::where('artist_id',$request->artist_id)
+                                          ->where('album_id',$request->album_id)
                                           ->where('email',$request->email)
                                           ->where('platform',$request->platform)
                                           ->where('album_name',$request->album_name)
@@ -59,12 +61,14 @@ class ArtistAlbumLikeController extends Controller
          if(!$artist_album_likes) {
             $artist_album_likes = ArtistAlbumLike::create([
                 'artist_id' => $request->artist_id,
+                'album_id' => $request->album_id,
                 'album_name' => $request->album_name,
                 'album_image' => $request->album_image,
                 'email' => $request->email,
                 'display_name' => $request->display_name,
                 'platform' => $request->platform,
                 'user_url' => $request->user_url,
+
             ]);
             
             return response()->json([
