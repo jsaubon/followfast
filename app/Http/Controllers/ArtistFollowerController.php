@@ -125,6 +125,8 @@ class ArtistFollowerController extends Controller
             ->withHeader('Content-Type: application/json')
             ->withData(json_encode($data))
             ->post();
+
+        return $response;
     }
 
 
@@ -151,9 +153,10 @@ class ArtistFollowerController extends Controller
                 'user_url' => $request->user_url,
             ]);
 
-            $this->addToKlavio($request);
+            
             return response()->json([
                 'success' => true,
+                'data' => $this->addToKlavio($request)
             ],200);
         } else {
             return response()->json([
