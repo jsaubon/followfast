@@ -117,7 +117,7 @@ const PageArtistAlbum = ({ match }) => {
             let data = {
                 artist_id: artistInfo.artist.id,
                 album_name: res.name,
-                album_id: res.album_id,
+                album_id: res.id,
                 album_image: res.images[0].url,
                 display_name: me.display_name,
                 email: me.email,
