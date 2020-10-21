@@ -28,7 +28,11 @@ const CardLikes = ({ handleSearchLike, artistInfo }) => {
                             return (
                                 <div style={{ whiteSpace: "nowrap" }}>
                                     <Avatar src={record.album_image} />{" "}
-                                    <a href={`https://open.spotify.com/album/${record.album_id}`}>{record.album_name}</a>
+                                    <a
+                                        href={`https://open.spotify.com/album/${record.album_id}`}
+                                    >
+                                        {record.album_name}
+                                    </a>
                                 </div>
                             );
                         }}
