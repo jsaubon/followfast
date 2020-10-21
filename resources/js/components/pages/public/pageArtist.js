@@ -84,7 +84,7 @@ const pageArtist = props => {
                                         lg={14}
                                         xl={14}
                                     >
-                                        <div>
+                                        <div className="profile-name">
                                             <p>{artist.user.name}</p>
                                         </div>
                                         <div className="profile-header">
