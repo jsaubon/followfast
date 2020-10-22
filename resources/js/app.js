@@ -14,6 +14,7 @@ import PlatformSpotify from "./components/pages/public/platforms/platformSpotify
 import PageArtistAlbum from "./components/pages/public/pageArtistAlbum";
 import PlatformSpotifyCallback from "./components/pages/public/platforms/platformSpotifyCallback";
 import Page404 from "./components/pages/public/page404";
+import PagePolarBear from "./components/pages/public/ff/pagePolarBear";
 
 const App = () => {
     let isLogged = localStorage.getItem("token");
@@ -32,6 +33,11 @@ const App = () => {
         <StateProvider>
             <Router>
                 <Switch>
+                    <Route
+                        exact
+                        path="/ff/polarbear"
+                        component={PagePolarBear}
+                    />
                     <Route
                         path="/artist/:song"
                         name="Artist"

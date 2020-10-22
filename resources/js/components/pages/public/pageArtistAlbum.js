@@ -124,6 +124,8 @@ const PageArtistAlbum = ({ match }) => {
                 user_url: me.external_urls.spotify,
                 platform: "Spotify"
             };
+
+            
             // PAGHIMO UG MODEL NGA ArtistAlbumLike
             // PAGHIMO SAB UG CONTROLLER NYA ROUTE
             fetchData("POST", "api/artist_album_like/like", data).then(res => {
