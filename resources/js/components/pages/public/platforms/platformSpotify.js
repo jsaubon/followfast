@@ -1,3 +1,4 @@
+import { LoadingOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import SpotifyWebApi from "spotify-web-api-js";
 import { fetchData } from "../../../../axios";
@@ -102,7 +103,12 @@ const PlatformSpotify = () => {
                             {/* Login to Spotify */}
                         </a>
                     )}{" "}
-                    {spotify_token && <>Redirecting you to Spotify</>}
+                    {spotify_token && (
+                        <>
+                            <LoadingOutlined spin />
+                            Redirecting you to Spotify
+                        </>
+                    )}
                 </header>
             </div>
         </div>

@@ -1,4 +1,5 @@
-import { Alert, message, Row, Col } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Alert, message, Row, Col, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import SpotifyWebApi from "spotify-web-api-js";
 import { fetchData } from "../../../axios";
@@ -128,7 +129,6 @@ const PageArtistAlbum = ({ match }) => {
                 type: "Album"
             };
 
-            
             // PAGHIMO UG MODEL NGA ArtistAlbumLike
             // PAGHIMO SAB UG CONTROLLER NYA ROUTE
             fetchData("POST", "api/artist_album_like/like", data).then(res => {
@@ -159,10 +159,11 @@ const PageArtistAlbum = ({ match }) => {
                     xl={8}
                     style={{ textAlign: "center" }}
                 >
-                    <img
+                    {/* <img
                         src={gif}
                         style={{ marginTop: "50px", width: "100%" }}
-                    ></img>
+                    ></img> */}
+                    <LoadingOutlined spin size="30" />
                     <p style={{ marginLeft: "10px" }}>
                         REDIRECTING TO SPOTIFY...
                     </p>

@@ -1,3 +1,4 @@
+import { LoadingOutlined } from "@ant-design/icons";
 import { Alert, message, Row, Col } from "antd";
 import React, { useEffect, useState } from "react";
 import SpotifyWebApi from "spotify-web-api-js";
@@ -134,10 +135,11 @@ const PageArtistTrack = ({ match }) => {
                     xl={8}
                     style={{ textAlign: "center" }}
                 >
-                    <img
+                    {/* <img
                         src={gif}
                         style={{ marginTop: "50px", width: "100%" }}
-                    ></img>
+                    ></img> */}
+                    <LoadingOutlined spin />
                     <p style={{ marginLeft: "10px" }}>
                         REDIRECTING TO SPOTIFY...
                     </p>
