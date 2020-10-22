@@ -1,7 +1,8 @@
+import React from "react";
 import { Avatar, Card, Input, Table } from "antd";
 import Title from "antd/lib/typography/Title";
-import React from "react";
 import moment from "moment";
+
 const CardLikes = ({ handleSearchLike, artistInfo }) => {
     return (
         <>
@@ -21,18 +22,28 @@ const CardLikes = ({ handleSearchLike, artistInfo }) => {
                     />
 
                     <Table.Column
-                        title="Album Name"
+                        title="Name"
                         dataIndex="album_name"
                         key="album_name"
                         render={(text, record) => {
                             return (
-                                <div style={{ whiteSpace: "nowrap" }}>
-                                    <Avatar src={record.album_image} />{" "}
-                                    <a
-                                        href={`https://open.spotify.com/album/${record.album_id}`}
-                                    >
-                                        {record.album_name}
-                                    </a>
+                                <div
+                                // style={{ whiteSpace: "nowrap" }}
+                                >
+                                    {/* <Avatar src={record.album_image} />{" "} */}
+                                    {record.type == "Album" ? (
+                                        <a
+                                            href={`https://open.spotify.com/album/${record.album_id}`}
+                                        >
+                                            {record.album_name}
+                                        </a>
+                                    ) : (
+                                        <a
+                                            href={`https://open.spotify.com/track/${record.album_id}`}
+                                        >
+                                            {record.album_name}
+                                        </a>
+                                    )}
                                 </div>
                             );
                         }}
@@ -50,16 +61,7 @@ const CardLikes = ({ handleSearchLike, artistInfo }) => {
                         }}
                     />
                     <Table.Column title="Email" dataIndex="email" key="email" />
-                    <Table.Column
-                        title="Likes At"
-                        dataIndex="created_at"
-                        key="created_at"
-                        render={(text, record) => {
-                            return moment(record.created_at).format(
-                                "YYYY-MM-DD hh:mm A"
-                            );
-                        }}
-                    />
+                    <Table.Column title="Type" dataIndex="type" key="type" />
                 </Table>
             </Card>
         </>

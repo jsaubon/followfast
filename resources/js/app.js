@@ -12,6 +12,7 @@ import Login from "./components/pages/public/login";
 import PageArtist from "./components/pages/public/pageArtist";
 import PlatformSpotify from "./components/pages/public/platforms/platformSpotify";
 import PageArtistAlbum from "./components/pages/public/pageArtistAlbum";
+import PageArtistTrack from "./components/pages/public/pageArtistTrack";
 import PlatformSpotifyCallback from "./components/pages/public/platforms/platformSpotifyCallback";
 import Page404 from "./components/pages/public/page404";
 
@@ -55,6 +56,12 @@ const App = () => {
                         name="Artist Album"
                         exact
                         component={PageArtistAlbum}
+                    />
+                    <Route
+                        path="/artist/:id/track/:track"
+                        name="Artist Track"
+                        exact
+                        component={PageArtistTrack}
                     />
                     <Route exact path="/404" component={Page404} />
                     <Route
