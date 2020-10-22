@@ -62,7 +62,9 @@ const PagePublicAlbum = ({ album }) => {
                                             onClick={e =>
                                                 window.open(
                                                     window.location.origin +
-                                                        "/artist/3/album/" +
+                                                        "/artist/" +
+                                                        album.user.id +
+                                                        "/album/" +
                                                         album.album_id,
                                                     "_blank"
                                                 )

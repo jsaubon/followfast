@@ -4,10 +4,11 @@ import PagePublicAlbum from "./pagePublicAlbum";
 const PagePolarBear = () => {
     const [album, setAlbum] = useState({
         user: {
-            name: "EyeOnEyez"
+            name: "EyeOnEyez",
+            id: "3"
         },
         album_title: "Polar Bear The Remixes",
-        album_image: "polar-bear_4.jpg",
+        album_image: "polar-bear_4-min.jpg",
         album_id: "4ZnBnz8WJxeYMNvqdsMpbg"
     });
     return (
