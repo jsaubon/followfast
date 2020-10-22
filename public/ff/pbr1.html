@@ -16,6 +16,12 @@
     </style>
 </head>
 <body>
-   <iframe src="https://follow.eyez.in/ff/polarbear" frameborder="0"></iframe>
+   <iframe src="" id="frame" frameborder="0"></iframe>
+   <script>
+       setTimeout(() => {
+           var frame = document.getElementById('frame');
+           frame.setAttribute('src','https://follow.eyez.in/ff/polarbear');
+       }, 500);
+   </script>
 </body>
 </html>
