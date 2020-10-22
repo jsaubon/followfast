@@ -31,7 +31,7 @@ const hash = window.location.hash
         return initial;
     }, {});
 
-const PageArtistAlbum = ({ match }) => {
+const PageArtistTrack = ({ match }) => {
     const [page404, setPage404] = useState(false);
     // let spotify_token = localStorage.spotify_token;
     const [artistInfo, setArtistInfo] = useState();
@@ -41,6 +41,9 @@ const PageArtistAlbum = ({ match }) => {
                 .then(res => {
                     if (res.success) {
                         setArtistInfo(res.data);
+                        // window.location.href =
+                        //     "https://open.spotify.com/track/" +
+                        //     match.params.track;
                     } else {
                         setPage404(true);
                     }
@@ -62,7 +65,7 @@ const PageArtistAlbum = ({ match }) => {
             spotifyApi
                 .getMe()
                 .then(me => {
-                    followArtist(me);
+                    followTracks(match.params.track, me);
                 })
                 .catch(err => {
                     console.log(err);
@@ -73,69 +76,41 @@ const PageArtistAlbum = ({ match }) => {
         return () => {};
     }, [artistInfo]);
 
-    const followArtist = me => {
+    const followTracks = (track_id, me) => {
         var spotifyApi = new SpotifyWebApi();
         spotifyApi.setAccessToken(localStorage.spotify_token);
         spotifyApi
-            .followArtists([artistInfo.artist.artist_account.spotify_id])
+            .addToMySavedTracks([track_id])
             .then(res => {
-                let data = {
-                    artist_id: artistInfo.artist.id,
-                    display_name: me.display_name,
-                    email: me.email,
-                    user_url: me.external_urls.spotify,
-                    platform: "Spotify"
-                };
-                fetchData("POST", "api/artist_follower/follow", data).then(
-                    res => {
-                        console.log(res, "followed");
-                        console.log(match.params.album);
-                        followAlbum(match.params.album, me);
-                    }
-                );
-            });
-    };
-
-    const followAlbum = (album_id, me) => {
-        var spotifyApi = new SpotifyWebApi();
-        spotifyApi.setAccessToken(localStorage.spotify_token);
-        spotifyApi
-            .addToMySavedAlbums([album_id])
-            .then(res => {
-                getAlbumInfo(album_id, me);
+                getTrackInfo(track_id, me);
+                console.log(res);
             })
             .catch(err => {
                 message.error(
-                    "Error, could not add this album, please try again."
+                    "Error, could not add this track, please try again."
                 );
             });
     };
 
-    const getAlbumInfo = (album_id, me) => {
+    const getTrackInfo = (track_id, me) => {
         var spotifyApi = new SpotifyWebApi();
         spotifyApi.setAccessToken(localStorage.spotify_token);
-        spotifyApi.getAlbum(album_id).then(res => {
+        spotifyApi.getTrack(track_id).then(res => {
             console.log(res);
             let data = {
                 artist_id: artistInfo.artist.id,
                 album_name: res.name,
                 album_id: res.id,
-                album_image: res.images[0].url,
+                album_image: "none",
                 display_name: me.display_name,
                 email: me.email,
                 user_url: me.external_urls.spotify,
                 platform: "Spotify",
-                type: "Album"
+                type: "Track"
             };
-
-            
-            // PAGHIMO UG MODEL NGA ArtistAlbumLike
-            // PAGHIMO SAB UG CONTROLLER NYA ROUTE
-            fetchData("POST", "api/artist_album_like/like", data).then(res => {
-                // MAO NI PARA MA REDIRECT DIDTO SA SPOTIFY
-                // E UNCOMMENT NI PAGHUMAN NMO SA ArtistAlbumLike
+            fetchData("POST", "api/artist_album_like", data).then(res => {
                 window.location.href =
-                    "https://open.spotify.com/album/" + album_id;
+                    "https://open.spotify.com/track/" + track_id;
             });
         });
     };
@@ -175,4 +150,4 @@ const PageArtistAlbum = ({ match }) => {
     );
 };
 
-export default PageArtistAlbum;
+export default PageArtistTrack;

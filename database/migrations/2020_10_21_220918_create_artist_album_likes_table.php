@@ -23,6 +23,7 @@ class CreateArtistAlbumLikesTable extends Migration
             $table->string('platform');
             $table->string('user_url');
             $table->longText('album_image');
+            $table->string('type');
             $table->timestamps();
         });
     }
