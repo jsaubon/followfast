@@ -35,11 +35,6 @@ const App = () => {
             <Router>
                 <Switch>
                     <Route
-                        exact
-                        path="/ff/polarbear"
-                        component={PagePolarBear}
-                    />
-                    <Route
                         path="/artist/:song"
                         name="Artist"
                         exact
