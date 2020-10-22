@@ -206,7 +206,7 @@ const PageArtistProfile = ({ match, history, location }) => {
     return (
         <>
             <Title levle={4}>Artist Profile</Title>
-            {/* {console.log("allTrack", mergeTrack)} */}
+            {console.log("allTrack", mergeTrack)}
             <Button
                 type="primary"
                 onClick={e => history.push("/artists")}
