@@ -15,7 +15,6 @@ import PageArtistAlbum from "./components/pages/public/pageArtistAlbum";
 import PageArtistTrack from "./components/pages/public/pageArtistTrack";
 import PlatformSpotifyCallback from "./components/pages/public/platforms/platformSpotifyCallback";
 import Page404 from "./components/pages/public/page404";
-import PagePolarBear from "./components/pages/public/ff/pagePolarBear";
 
 const App = () => {
     let isLogged = localStorage.getItem("token");
