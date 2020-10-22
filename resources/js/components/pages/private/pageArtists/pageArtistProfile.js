@@ -36,6 +36,7 @@ import SpotifyWebApi from "spotify-web-api-js";
 import { copyToClipboard } from "./copyToClipboard";
 import { Tab } from "bootstrap";
 import TabSpotifyAlbums from "./tabsSpotify/tabSpotifyAlbums";
+import TabSpotifyTracks from "./tabsSpotify/tabSpotifyTracks";
 import CardFollowers from "./cardFollowers";
 import CardLikes from "./cardLikes";
 export const authEndpoint = "https://accounts.spotify.com/authorize";
@@ -140,7 +141,7 @@ const PageArtistProfile = ({ match, history, location }) => {
     };
     const [spotifyAlbums, setSpotifyAlbums] = useState([]);
     const getSpotifyAlbums = artistInfo => {
-        console.log(artistInfo.artist.artist_account.spotify_id);
+        console.log("wew", artistInfo.artist.artist_account.spotify_id);
         var spotifyApi = new SpotifyWebApi();
         spotifyApi.setAccessToken(localStorage.spotify_token);
         spotifyApi
@@ -148,8 +149,9 @@ const PageArtistProfile = ({ match, history, location }) => {
                 limit: 50
             })
             .then(res => {
-                console.log(res.items);
+                // console.log(res.items);
                 setSpotifyAlbums(res.items);
+                getSpotifyTracks(res.items);
             })
             .catch(err => {
                 console.log(err);
@@ -158,9 +160,53 @@ const PageArtistProfile = ({ match, history, location }) => {
                 getArtist();
             });
     };
+
+    const [allTracks, setAllTracks] = useState([]);
+    const [mergeTrack, setMergeTrack] = useState([]);
+    const getSpotifyTracks = albums => {
+        var albumsId = [];
+        albums.map(res => {
+            albumsId.push(res.id);
+        });
+
+        albumsId.map(id => {
+            var spotifyApi = new SpotifyWebApi();
+            spotifyApi.setAccessToken(localStorage.spotify_token);
+            spotifyApi
+                .getAlbum(id)
+                .then(data => {
+                    return data.tracks.items.map(function(t) {
+                        return t.id;
+                    });
+                })
+                .then(trackIds => {
+                    return spotifyApi.getTracks(trackIds);
+                })
+                .then(tracksInfo => {
+                    let a = [];
+                    tracksInfo.tracks.forEach(element => {
+                        a.push(element);
+                    });
+                    setAllTracks(a);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+    };
+
+    useEffect(() => {
+        let a = [];
+        allTracks.map(element => {
+            a.push(element);
+        });
+        setMergeTrack(mergeTrack.concat(a));
+    }, [allTracks]);
+
     return (
         <>
             <Title levle={4}>Artist Profile</Title>
+            {/* {console.log("allTrack", mergeTrack)} */}
             <Button
                 type="primary"
                 onClick={e => history.push("/artists")}
@@ -308,7 +354,14 @@ const PageArtistProfile = ({ match, history, location }) => {
                                                         key="tab_spotify_2"
                                                     >
                                                         <Title level={4}>
-                                                            Tracks
+                                                            <TabSpotifyTracks
+                                                                mergeTrack={
+                                                                    mergeTrack
+                                                                }
+                                                                artistInfo={
+                                                                    artistInfo
+                                                                }
+                                                            />
                                                         </Title>
                                                     </Tabs.TabPane>
                                                 </Tabs>

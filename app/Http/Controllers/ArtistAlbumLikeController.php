@@ -68,6 +68,7 @@ class ArtistAlbumLikeController extends Controller
                 'display_name' => $request->display_name,
                 'platform' => $request->platform,
                 'user_url' => $request->user_url,
+                'type'=>$request->type
 
             ]);
             
