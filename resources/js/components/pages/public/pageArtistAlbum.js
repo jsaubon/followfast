@@ -1,10 +1,12 @@
-import { Alert, message } from "antd";
+import { Alert, message, Row, Col } from "antd";
 import React, { useEffect, useState } from "react";
 import SpotifyWebApi from "spotify-web-api-js";
 import { fetchData } from "../../../axios";
 import Page404 from "./page404";
-
 export const authEndpoint = "https://accounts.spotify.com/authorize";
+
+const gif = window.location.origin + "/assets/images/redirect.gif";
+
 const artistInfo = localStorage.artist ? JSON.parse(localStorage.artist) : "";
 const clientId = "09f5bed2a09e492e93979f2a45b90d39";
 const redirectUri = `${window.location.origin}/platform/spotify/callback`;
@@ -144,7 +146,32 @@ const PageArtistAlbum = ({ match }) => {
         )}&response_type=token&show_dialog=false`;
     };
 
-    return <div>{page404 && <Page404 />}</div>;
+    return (
+        <div>
+            <Row>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8}></Col>
+                <Col
+                    xs={284}
+                    sm={8}
+                    md={8}
+                    lg={8}
+                    xl={8}
+                    style={{ textAlign: "center" }}
+                >
+                    <img
+                        src={gif}
+                        style={{ marginTop: "50px", width: "100%" }}
+                    ></img>
+                    <p style={{ marginLeft: "10px" }}>
+                        REDIRECTING TO SPOTIFY...
+                    </p>
+                </Col>
+                <Col xs={8} sm={8} md={8} lg={8} xl={8}></Col>
+            </Row>
+
+            {page404 && <Page404 />}
+        </div>
+    );
 };
 
 export default PageArtistAlbum;
