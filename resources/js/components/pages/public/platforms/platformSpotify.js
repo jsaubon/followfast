@@ -1,4 +1,5 @@
 import { LoadingOutlined } from "@ant-design/icons";
+import { Col, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import SpotifyWebApi from "spotify-web-api-js";
 import { fetchData } from "../../../../axios";
@@ -105,8 +106,27 @@ const PlatformSpotify = () => {
                     )}{" "}
                     {spotify_token && (
                         <>
-                            <LoadingOutlined spin />
-                            Redirecting you to Spotify
+                            <Row>
+                                <Col xs={0} sm={0} md={8} lg={8} xl={8}></Col>
+                                <Col
+                                    xs={24}
+                                    sm={24}
+                                    md={8}
+                                    lg={8}
+                                    xl={8}
+                                    style={{ textAlign: "center" }}
+                                >
+                                    {/* <img
+                        src={gif}
+                        style={{ marginTop: "50px", width: "100%" }}
+                    ></img> */}
+                                    <LoadingOutlined spin size="30" />
+                                    <p style={{ marginLeft: "10px" }}>
+                                        REDIRECTING TO SPOTIFY...
+                                    </p>
+                                </Col>
+                                <Col xs={0} sm={0} md={8} lg={8} xl={8}></Col>
+                            </Row>
                         </>
                     )}
                 </header>

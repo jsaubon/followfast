@@ -126,10 +126,10 @@ const PageArtistTrack = ({ match }) => {
     return (
         <div>
             <Row>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8}></Col>
+                <Col xs={0} sm={0} md={8} lg={8} xl={8}></Col>
                 <Col
-                    xs={284}
-                    sm={8}
+                    xs={24}
+                    sm={24}
                     md={8}
                     lg={8}
                     xl={8}
@@ -139,12 +139,12 @@ const PageArtistTrack = ({ match }) => {
                         src={gif}
                         style={{ marginTop: "50px", width: "100%" }}
                     ></img> */}
-                    <LoadingOutlined spin />
+                    <LoadingOutlined spin size="30" />
                     <p style={{ marginLeft: "10px" }}>
                         REDIRECTING TO SPOTIFY...
                     </p>
                 </Col>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8}></Col>
+                <Col xs={0} sm={0} md={8} lg={8} xl={8}></Col>
             </Row>
 
             {page404 && <Page404 />}

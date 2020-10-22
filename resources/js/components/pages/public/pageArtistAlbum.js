@@ -150,10 +150,10 @@ const PageArtistAlbum = ({ match }) => {
     return (
         <div>
             <Row>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8}></Col>
+                <Col xs={0} sm={0} md={8} lg={8} xl={8}></Col>
                 <Col
-                    xs={284}
-                    sm={8}
+                    xs={24}
+                    sm={24}
                     md={8}
                     lg={8}
                     xl={8}
@@ -168,7 +168,7 @@ const PageArtistAlbum = ({ match }) => {
                         REDIRECTING TO SPOTIFY...
                     </p>
                 </Col>
-                <Col xs={8} sm={8} md={8} lg={8} xl={8}></Col>
+                <Col xs={0} sm={0} md={8} lg={8} xl={8}></Col>
             </Row>
 
             {page404 && <Page404 />}
