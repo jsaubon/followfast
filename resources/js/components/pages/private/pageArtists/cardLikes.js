@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar, Card, Input, Table } from "antd";
 import Title from "antd/lib/typography/Title";
 import moment from "moment";
 
-const CardLikes = ({ handleSearchLike, artistInfo }) => {
+import { fetchData } from "../../../../axios";
+const CardLikes = ({ handleSearchLike, match }) => {
+    const [artistInfo, setArtistInfo] = useState();
+
+    useEffect(() => {
+        getArtist();
+
+        return () => {};
+    }, []);
+    const getArtist = () => {
+        fetchData("GET", "api/artist/" + match.params.id).then(res => {
+            setArtistInfo(res.data);
+            console.log("the data", res.data);
+            console.log(res.data);
+        });
+    };
+
     return (
         <>
             <Card className="mt-10 ">
@@ -15,7 +31,11 @@ const CardLikes = ({ handleSearchLike, artistInfo }) => {
                 <br />
                 <br />
                 <div style={{ overflowX: "auto" }}>
-                    <Table dataSource={artistInfo.artist.artist_album_like}>
+                    <Table
+                        dataSource={
+                            artistInfo && artistInfo.artist.artist_album_like
+                        }
+                    >
                         <Table.Column
                             title="Platform"
                             dataIndex="platform"
