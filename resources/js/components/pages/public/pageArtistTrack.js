@@ -112,7 +112,18 @@ const PageArtistTrack = ({ match }) => {
             let track_name = res.name;
             fetchData("POST", "api/artist_album_like/like", data).then(res => {
                 console.log("TRACK NAME", track_name);
+
                 gtag("event", "followed", {
+                    send_to: "AW-808953923",
+                    value: "0",
+                    items: [
+                        {
+                            id: artistInfo.name,
+                            google_business_vertical: "music"
+                        }
+                    ]
+                });
+                gtag("event", "liked", {
                     send_to: "AW-808953923",
                     value: "0",
                     items: [
@@ -122,9 +133,13 @@ const PageArtistTrack = ({ match }) => {
                         }
                     ]
                 });
+                console.log("GTAG WORKING");
 
+                fbq("trackCustom", "followed", { id: artistInfo.name });
+                fbq("trackCustom", "liked", { id: track_name });
+                console.log("FB PIXEL WORKING");
                 window.location.href =
-                    "https://open.spotify.com/track/" + track_id;
+                "https://open.spotify.com/track/" + track_id;
             });
         });
     };

@@ -132,8 +132,17 @@ const PageArtistAlbum = ({ match }) => {
             fetchData("POST", "api/artist_album_like/like", data).then(res => {
                 // https://follow.eyez.in/artist/3/album/70noOANzTufNfO5DDRYv1g
                 //
-                console.log("Album NAME", album_name);
                 gtag("event", "followed", {
+                    send_to: "AW-808953923",
+                    value: "0",
+                    items: [
+                        {
+                            id: artistInfo.name,
+                            google_business_vertical: "music"
+                        }
+                    ]
+                });
+                gtag("event", "liked", {
                     send_to: "AW-808953923",
                     value: "0",
                     items: [
@@ -143,6 +152,11 @@ const PageArtistAlbum = ({ match }) => {
                         }
                     ]
                 });
+                console.log("GTAG WORKING");
+
+                fbq("trackCustom", "followed", { id: artistInfo.name });
+                fbq("trackCustom", "liked", { id: album_name });
+                console.log("FB PIXEL WORKING");
 
                 window.location.href =
                     "https://open.spotify.com/album/" + album_id;

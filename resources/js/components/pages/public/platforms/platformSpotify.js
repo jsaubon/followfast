@@ -79,6 +79,12 @@ const PlatformSpotify = () => {
                                         }
                                     ]
                                 });
+                                console.log("GTAG WORKING");
+
+                                fbq("trackCustom", "followed", {
+                                    id: artistInfo.name
+                                });
+                                console.log("FB PIXEL WORKING");
                                 location.href =
                                     "https://open.spotify.com/artist/" +
                                     artistInfo.artist_account.spotify_id;
