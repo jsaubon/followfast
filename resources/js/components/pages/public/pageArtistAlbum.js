@@ -128,12 +128,22 @@ const PageArtistAlbum = ({ match }) => {
                 platform: "Spotify",
                 type: "Album"
             };
-
-            // PAGHIMO UG MODEL NGA ArtistAlbumLike
-            // PAGHIMO SAB UG CONTROLLER NYA ROUTE
+            let album_name = res.name;
             fetchData("POST", "api/artist_album_like/like", data).then(res => {
-                // MAO NI PARA MA REDIRECT DIDTO SA SPOTIFY
-                // E UNCOMMENT NI PAGHUMAN NMO SA ArtistAlbumLike
+                // https://follow.eyez.in/artist/3/album/70noOANzTufNfO5DDRYv1g
+                //
+                console.log("Album NAME", album_name);
+                gtag("event", "followed", {
+                    send_to: "AW-808953923",
+                    value: "0",
+                    items: [
+                        {
+                            id: album_name,
+                            google_business_vertical: "music"
+                        }
+                    ]
+                });
+
                 window.location.href =
                     "https://open.spotify.com/album/" + album_id;
             });

@@ -62,11 +62,23 @@ const PlatformSpotify = () => {
                                 user_url: me.external_urls.spotify,
                                 platform: "Spotify"
                             };
+                            let artist_name = artistInfo.name;
                             fetchData(
                                 "POST",
                                 "api/artist_follower/follow",
                                 data
                             ).then(res => {
+                                console.log("ARTIST NAME", album_name);
+                                gtag("event", "followed", {
+                                    send_to: "AW-808953923",
+                                    value: "0",
+                                    items: [
+                                        {
+                                            id: artist_name,
+                                            google_business_vertical: "music"
+                                        }
+                                    ]
+                                });
                                 location.href =
                                     "https://open.spotify.com/artist/" +
                                     artistInfo.artist_account.spotify_id;

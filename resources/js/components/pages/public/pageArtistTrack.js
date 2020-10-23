@@ -109,7 +109,20 @@ const PageArtistTrack = ({ match }) => {
                 platform: "Spotify",
                 type: "Track"
             };
+            let track_name = res.name;
             fetchData("POST", "api/artist_album_like/like", data).then(res => {
+                console.log("TRACK NAME", track_name);
+                gtag("event", "followed", {
+                    send_to: "AW-808953923",
+                    value: "0",
+                    items: [
+                        {
+                            id: track_name,
+                            google_business_vertical: "music"
+                        }
+                    ]
+                });
+
                 window.location.href =
                     "https://open.spotify.com/track/" + track_id;
             });
