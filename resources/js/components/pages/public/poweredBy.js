@@ -41,7 +41,7 @@ const poweredBy = artist => {
                             fontSize: "20px"
                         }}
                     >
-                        FOLLOWFAST
+                        WICKEDFOLLOW
                     </span>
                 </div>
             </div>

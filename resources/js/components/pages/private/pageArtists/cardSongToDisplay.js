@@ -56,7 +56,7 @@ const CardSongToDisplay = ({ artistInfo }) => {
                     .toLowerCase()}`}
                 target="_blank"
             >
-                {">"} FollowFast Link {"<"}
+                {">"} WickerFollow Link {"<"}
             </Link> */}
             {/* {console.log(artistInfo)} */}
         </Card>
