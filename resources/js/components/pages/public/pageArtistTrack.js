@@ -109,7 +109,7 @@ const PageArtistTrack = ({ match }) => {
                 platform: "Spotify",
                 type: "Track"
             };
-            fetchData("POST", "api/artist_album_like", data).then(res => {
+            fetchData("POST", "api/artist_album_like/like", data).then(res => {
                 window.location.href =
                     "https://open.spotify.com/track/" + track_id;
             });
