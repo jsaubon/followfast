@@ -26,6 +26,9 @@ const LayoutHeader = () => {
                 <Menu.Item key="/users">
                     <Link to="/users">Users</Link>
                 </Menu.Item>
+                <Menu.Item key="/followers">
+                    <Link to="/followers">Followers</Link>
+                </Menu.Item>
                 <Menu.SubMenu
                     title=""
                     className="pull-right "

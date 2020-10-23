@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ArtistFollower;
+use App\User;
 use Illuminate\Http\Request;
 use Ixudra\Curl\Facades\Curl;
 
@@ -16,6 +17,22 @@ class ArtistFollowerController extends Controller
     public function index(Request $request)
     {
         $artist_followers = ArtistFollower::all();
+
+        return response()->json([
+            'success' => true,
+            'data' => $artist_followers
+        ],200);
+    }
+
+    public function getFollower(Request $request)
+    {
+        $artist_followers = ArtistFollower::with(['artist'])->get();
+
+        foreach($artist_followers as $key => $a){
+
+            $user = User::find($a['artist']['user_id']);
+             $artist_followers[$key]['user'] =  $user;
+        }
 
         return response()->json([
             'success' => true,
