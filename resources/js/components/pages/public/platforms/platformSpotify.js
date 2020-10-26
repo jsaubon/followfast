@@ -68,7 +68,7 @@ const PlatformSpotify = () => {
                                 "api/artist_follower/follow",
                                 data
                             ).then(res => {
-                                console.log("ARTIST NAME", album_name);
+                                console.log("ARTIST NAME", artistInfo.name);
                                 gtag("event", "followed", {
                                     send_to: "AW-808953923",
                                     value: "0",
