@@ -14,12 +14,33 @@ class ArtistController extends Controller
      */
     public function index(Request $request)
     {
-        $artists = Artist::orderBy('id','desc')->get();
+        if (isset($request->spotify_id)) {
+            $artists = \App\ArtistAccount::where('spotify_id', $request->spotify_id)->first();
+            if ($artists) {
+                $artists = $artists->artist()->with('user', 'artist_account')->first();
+
+                return response()->json([
+                    'success' => true,
+                    'data' => $artists,
+                    'reqiest' => $request->all()
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'data' => $artists,
+                    'reqiest' => $request->all()
+                ], 200);
+            }
+        } else {
+            $artists = Artist::orderBy('id', 'desc')->get();
+        }
+
 
         return response()->json([
             'success' => true,
-            'data' => $artists
-        ],200);
+            'data' => $artists,
+            'reqiest' => $request->all()
+        ], 200);
     }
 
     /**
@@ -36,13 +57,13 @@ class ArtistController extends Controller
             'song_image' => 'required',
         ]);
 
-        if($request->song_image) {
-            if(strpos($request->song_image, 'data:image') === 0) {
+        if ($request->song_image) {
+            if (strpos($request->song_image, 'data:image') === 0) {
                 $song_image = $this->saveImage($request->song_image);
             } else {
                 $song_image = $request->song_image;
             }
-        } 
+        }
         $artist = Artist::create([
             'user_id' => $request->user_id,
             'song_title' => $request->song_title,
@@ -53,19 +74,20 @@ class ArtistController extends Controller
         return response()->json([
             'success' => true,
             'data' => $artist
-        ],200);
+        ], 200);
     }
 
 
-    private function saveImage($imageData) {
+    private function saveImage($imageData)
+    {
         $imageData = str_replace('data:image/jpeg;base64,', '', $imageData);
         $imageData = str_replace('data:image/png;base64,', '', $imageData);
         $imageData = str_replace(' ', '+', $imageData);
         $imageData = base64_decode($imageData);
         $source = imagecreatefromstring($imageData);
         $rotate = imagerotate($source, 0, 0); // if want to rotate the image
-        $imageName = 'assets/images/'.rand().'.png';
-        $imageSave = imagejpeg($rotate,$imageName,100);
+        $imageName = 'assets/images/' . rand() . '.png';
+        $imageSave = imagejpeg($rotate, $imageName, 100);
         imagedestroy($source);
 
         return $imageName;
@@ -80,9 +102,9 @@ class ArtistController extends Controller
      */
     public function show($id)
     {
-        $artist = \App\User::where('id',$id)->with(['artist' => function($q) {
-            $q->with(['artist_account','artist_social','artist_followers','artist_album_like' => function($q1) {
-                $q1->orderBy('created_at','desc');
+        $artist = \App\User::where('id', $id)->with(['artist' => function ($q) {
+            $q->with(['artist_account', 'artist_social', 'artist_followers', 'artist_album_like' => function ($q1) {
+                $q1->orderBy('created_at', 'desc');
             }]);
         }])->first();
 
@@ -96,27 +118,27 @@ class ArtistController extends Controller
         return response()->json([
             'success' => true,
             'data' => $artist
-        ],200);
+        ], 200);
     }
     public function getBySong($song)
     {
-        $song = str_replace('_',' ',$song);
-        $artist = \App\Artist::where('song_title',$song)->with(['user','artist_account','artist_social','artist_followers' => function($q1) {
-                $q1->orderBy('created_at','desc');
-            }])->first();;
+        $song = str_replace('_', ' ', $song);
+        $artist = \App\Artist::where('song_title', $song)->with(['user', 'artist_account', 'artist_social', 'artist_followers' => function ($q1) {
+            $q1->orderBy('created_at', 'desc');
+        }])->first();;
         // $artist = \App\User::where('id',$id)->with()->first();
 
         if (!$artist) {
             return response()->json([
                 'success' => false,
-                'message' => 'Artist with id ' . $id . ' not found'
+                'message' => 'Artist with id  not found'
             ], 400);
         }
 
         return response()->json([
             'success' => true,
             'data' => $artist
-        ],200);
+        ], 200);
     }
 
     /**
@@ -137,18 +159,18 @@ class ArtistController extends Controller
             ], 400);
         }
 
-        if($request->song_image) {
-            if(strpos($request->song_image, 'data:image') === 0) {
+        if ($request->song_image) {
+            if (strpos($request->song_image, 'data:image') === 0) {
                 $song_image = $this->saveImage($request->song_image);
             } else {
                 $song_image = $request->song_image;
             }
-        } 
+        }
         $artist->user_id = $request->user_id;
         $artist->song_title = $request->song_title;
         $artist->song_description = $request->song_description;
         $artist->notes = $request->notes;
-        
+
         $artist->song_image = $song_image;
         $artist->save();
 
@@ -156,7 +178,7 @@ class ArtistController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => $artist
-            ],200);
+            ], 200);
         else
             return response()->json([
                 'success' => false,
@@ -184,7 +206,7 @@ class ArtistController extends Controller
         if ($artist->delete()) {
             return response()->json([
                 'success' => true
-            ],200);
+            ], 200);
         } else {
             return response()->json([
                 'success' => false,

@@ -1,5 +1,5 @@
 import { LoadingOutlined } from "@ant-design/icons";
-import { Col, Row } from "antd";
+import { Col, message, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import SpotifyWebApi from "spotify-web-api-js";
 import { fetchData } from "../../../../axios";
@@ -28,7 +28,7 @@ const hash = window.location.hash
         return initial;
     }, {});
 
-const PlatformSpotify = () => {
+const PlatformSpotify = props => {
     console.log(hash);
     let spotify_token = localStorage.spotify_token;
     useEffect(() => {
@@ -40,67 +40,88 @@ const PlatformSpotify = () => {
         }
 
         if (spotify_token) {
-            var spotifyApi = new SpotifyWebApi();
-            spotifyApi.setAccessToken(spotify_token);
-            spotifyApi
-                .getMe()
-                .then(me => {
-                    console.log(
-                        me,
-                        me.email,
-                        me.display_name,
-                        artistInfo,
-                        artistInfo.artist_account.spotify_id
-                    );
-                    spotifyApi
-                        .followArtists([artistInfo.artist_account.spotify_id])
-                        .then(res => {
-                            let data = {
-                                artist_id: artistInfo.id,
-                                display_name: me.display_name,
-                                email: me.email,
-                                user_url: me.external_urls.spotify,
-                                platform: "Spotify"
-                            };
-                            let artist_name = artistInfo.name;
-                            fetchData(
-                                "POST",
-                                "api/artist_follower/follow",
-                                data
-                            ).then(res => {
-                                console.log("ARTIST NAME", artistInfo.name);
-                                gtag("event", "followed", {
-                                    send_to: "AW-808953923",
-                                    value: "0",
-                                    items: [
-                                        {
-                                            id: artist_name,
-                                            google_business_vertical: "music"
-                                        }
-                                    ]
-                                });
-                                console.log("GTAG WORKING");
-
-                                fbq("trackCustom", "followed", {
-                                    id: artistInfo.name
-                                });
-                                console.log("FB PIXEL WORKING");
-                                location.href =
-                                    "https://open.spotify.com/artist/" +
-                                    artistInfo.artist_account.spotify_id;
-                            });
-                        });
-                })
-                .catch(err => {
-                    console.log(err);
-                    localStorage.removeItem("spotify_token");
-                    location.reload();
-                });
+            console.log(props.location.search);
+            let spotify_id = props.location.search;
+            if (spotify_id) {
+                spotify_id = spotify_id.replace("?spotify_id=", "");
+                fetchData("GET", "api/artist?spotify_id=" + spotify_id).then(
+                    res => {
+                        // console.log(res);
+                        if (res.success) {
+                            let _artistInfo = res.data;
+                            followArtist(_artistInfo);
+                        } else {
+                            message.error("Artist not found");
+                        }
+                    }
+                );
+            } else {
+                followArtist(artistInfo);
+            }
         } else {
             goToSpotifyLogin();
         }
         return () => {};
     }, []);
+
+    const followArtist = _artistInfo => {
+        var spotifyApi = new SpotifyWebApi();
+        spotifyApi.setAccessToken(spotify_token);
+        spotifyApi
+            .getMe()
+            .then(me => {
+                console.log(
+                    me,
+                    me.email,
+                    me.display_name,
+                    _artistInfo,
+                    _artistInfo.artist_account.spotify_id
+                );
+                spotifyApi
+                    .followArtists([_artistInfo.artist_account.spotify_id])
+                    .then(res => {
+                        let data = {
+                            artist_id: _artistInfo.id,
+                            display_name: me.display_name,
+                            email: me.email,
+                            user_url: me.external_urls.spotify,
+                            platform: "Spotify"
+                        };
+                        let artist_name = _artistInfo.user.name;
+                        fetchData(
+                            "POST",
+                            "api/artist_follower/follow",
+                            data
+                        ).then(res => {
+                            console.log("ARTIST NAME", _artistInfo.user.name);
+                            gtag("event", "followed", {
+                                send_to: "AW-808953923",
+                                value: "0",
+                                items: [
+                                    {
+                                        id: artist_name,
+                                        google_business_vertical: "music"
+                                    }
+                                ]
+                            });
+                            console.log("GTAG WORKING");
+
+                            fbq("trackCustom", "followed", {
+                                id: _artistInfo.user.name
+                            });
+                            console.log("FB PIXEL WORKING");
+                            location.href =
+                                "https://open.spotify.com/artist/" +
+                                _artistInfo.artist_account.spotify_id;
+                        });
+                    });
+            })
+            .catch(err => {
+                console.log(err);
+                localStorage.removeItem("spotify_token");
+                location.reload();
+            });
+    };
 
     const goToSpotifyLogin = () => {
         location.href = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(

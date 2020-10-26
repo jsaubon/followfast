@@ -224,72 +224,9 @@
         </div>
         <script>
             function goToSpotify() {
-                // window.open(
-                //     "https://follow.eyez.in/artist/3/album/0obASODGZ3L3tlOutM4JJQ"
-                // );
-                localStorage.artist = JSON.stringify({
-                    id: 2,
-                    user_id: 3,
-                    song_title: "EyeOnEyez",
-                    song_image: "assets/images/539922201.png",
-                    song_description:
-                        "typesomething typesomething typesomething",
-                    notes: null,
-                    created_at: "2020-10-19T19:29:35.000000Z",
-                    updated_at: "2020-10-21T22:01:31.000000Z",
-                    user: {
-                        id: 2,
-                        name: "admin",
-                        email: "admin@test.com",
-                        email_verified_at: null,
-                        active: 0,
-                        role: "Artist",
-                        created_at: "2020-10-19T19:29:35.000000Z",
-                        updated_at: "2020-10-19T20:12:46.000000Z"
-                    },
-                    artist_account: {
-                        id: 1,
-                        artist_id: 1,
-                        spotify_id: "3nvvdEjnlsAgbINStkVkkr",
-                        apple_id: null,
-                        itunes_id: null,
-                        google_id: null,
-                        amazon_id: null,
-                        tidal_id: null,
-                        Deezer_id: null,
-                        microsoft_id: null,
-                        napster_id: null,
-                        shazam_id: null,
-                        iheartradio_id: null,
-                        created_at: "2020-10-19T19:29:36.000000Z",
-                        updated_at: "2020-10-21T22:01:31.000000Z"
-                    },
-                    artist_social: {
-                        id: 1,
-                        artist_id: 1,
-                        instagram: null,
-                        facebook: "kaeltajores",
-                        twitter: "kaeltajores",
-                        youtube: "kaeltajores",
-                        created_at: "2020-10-19T19:29:36.000000Z",
-                        updated_at: "2020-10-19T21:58:53.000000Z"
-                    },
-                    artist_followers: [
-                        {
-                            id: 1,
-                            artist_id: 1,
-                            display_name: "\t\r\nKyle Vargas Tajores",
-                            email: "genekyletajores1997@gmail.com",
-                            platform: "Spotify",
-                            user_url:
-                                "https://open.spotify.com/user/31ybogpojblfabnffqw6vv5amgb4",
-                            created_at: "2020-10-21T22:02:42.000000Z",
-                            updated_at: "2020-10-21T22:02:42.000000Z"
-                        }
-                    ]
-                });
-
-                window.open("https://follow.eyez.in/platform/spotify");
+                window.open(
+                    "https://follow.eyez.in/platform/spotify?spotify_id=3nvvdEjnlsAgbINStkVkkr"
+                );
             }
         </script>
     </body>
