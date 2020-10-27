@@ -7,13 +7,20 @@ const CardFollowers = ({ handleSearchFollower, artistInfo }) => {
     return (
         <>
             <Card className="mt-10 ">
-                <Title level={4}>Followers</Title>
+                <Title level={4}>
+                    Followers (
+                    {artistInfo.artist.artist_followers
+                        ? artistInfo.artist.artist_followers.length
+                        : "0"}
+                    )
+                </Title>
                 <Input.Search
                     placeholder="Search here"
                     onChange={e => handleSearchFollower(e)}
                 />
                 <br />
                 <br />
+
                 <div style={{ overflowX: "auto" }}>
                     <Table dataSource={artistInfo.artist.artist_followers}>
                         <Table.Column

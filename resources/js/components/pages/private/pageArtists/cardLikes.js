@@ -23,7 +23,13 @@ const CardLikes = ({ handleSearchLike, match }) => {
     return (
         <>
             <Card className="mt-10 ">
-                <Title level={4}>Likes</Title>
+                <Title level={4}>
+                    Likes (
+                    {artistInfo
+                        ? artistInfo.artist.artist_album_like.length
+                        : "0"}
+                    ){" "}
+                </Title>
                 <Input.Search
                     placeholder="Search here"
                     onChange={e => handleSearchLike(e)}
