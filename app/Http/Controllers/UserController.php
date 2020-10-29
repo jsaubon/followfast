@@ -110,7 +110,12 @@ class UserController extends Controller
             ], 400);
         }
 
-        $updated = $user->fill($request->all())->save();
+        $user = $user->fill($request->all());
+        if(isset($request->password)) {
+            $user->password = bcrypt($request->password);
+        }
+        $updated = $user->save();
+
 
         if ($updated)
             return response()->json([

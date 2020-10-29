@@ -1,25 +1,26 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Layout, Row, Col, Form, Input, Checkbox, Button, Alert } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import Title from "antd/lib/typography/Title";
 import Text from "antd/lib/typography/Text";
 import { fetchData } from "../../../axios";
 
-
-
 const Login = () => {
     const [errorMessage, setErrorMessage] = useState();
-    const [loadingButtonLogin, setLoadingButtonLogin] = useState(false); 
+    const [loadingButtonLogin, setLoadingButtonLogin] = useState(false);
     var CryptoJS = require("crypto-js");
 
     const onFinish = values => {
         if (values.remember) {
             localStorage.email = values.email;
-            localStorage.password = CryptoJS.AES.encrypt(values.password,"password");
+            localStorage.pass = CryptoJS.AES.encrypt(
+                values.password,
+                "password"
+            );
             localStorage.remember = values.remember;
         } else {
             localStorage.email = "";
-            localStorage.password = "";
+            localStorage.pass = "";
             localStorage.remember = false;
         }
         setLoadingButtonLogin(true);
@@ -80,7 +81,10 @@ const Login = () => {
                                                 ? false
                                                 : true,
                                         email: localStorage.email,
-                                        password:CryptoJS.AES.decrypt(localStorage.password,"password").toString(CryptoJS.enc.Utf8),
+                                        password: CryptoJS.AES.decrypt(
+                                            localStorage.pass,
+                                            "password"
+                                        ).toString(CryptoJS.enc.Utf8)
                                     }}
                                     onFinish={onFinish}
                                 >
