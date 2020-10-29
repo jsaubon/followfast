@@ -14,7 +14,7 @@
         "guzzlehttp/guzzle": "^6.3",
         "ixudra/curl": "^6.21",
         "laravel/framework": "^7.0",
-        "laravel/passport": "^9.3",
+        "laravel/passport": "^10.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.1"
     },
