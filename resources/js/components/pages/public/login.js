@@ -63,7 +63,7 @@ const Login = () => {
                                     marginTop: "20px"
                                 }}
                             >
-                                <Title level={3}>WickedFooll</Title>
+                                <Title level={3}>WickedFollow</Title>
                                 <Text type="secondary">
                                     Sign In to your account
                                 </Text>
