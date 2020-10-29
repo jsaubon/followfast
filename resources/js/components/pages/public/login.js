@@ -84,7 +84,7 @@ const Login = () => {
                                         password: localStorage.password ? CryptoJS.AES.decrypt(
                                             localStorage.pass,
                                             "password"
-                                        ).toString(CryptoJS.enc.Utf8) ? ''
+                                        ).toString(CryptoJS.enc.Utf8) : ''
                                     }}
                                     onFinish={onFinish}
                                 >
