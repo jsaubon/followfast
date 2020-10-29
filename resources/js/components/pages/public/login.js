@@ -80,7 +80,7 @@ const Login = () => {
                                                 ? false
                                                 : true,
                                         email: localStorage.email,
-                                        password:CryptoJS.AES.decrypt(localStorage.password,"password").toString(CryptoJS.enc.Utf8),
+                                        password: localStorage.password ? CryptoJS.AES.decrypt(localStorage.password,"password").toString(CryptoJS.enc.Utf8) : '',
                                     }}
                                     onFinish={onFinish}
                                 >
