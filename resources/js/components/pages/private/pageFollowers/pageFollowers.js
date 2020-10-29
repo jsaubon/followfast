@@ -22,6 +22,7 @@ import ButtonGroup from "antd/lib/button/button-group";
 const PageFollowers = () => {
     const { Search } = Input;
     const [followerList, setFollwerList] = useState([]);
+    const [followerListLength, setFollwerListLength] = useState(0);
 
     const userdata = JSON.parse(localStorage.userdata);
 
@@ -33,6 +34,8 @@ const PageFollowers = () => {
     const getFollowers = () => {
         fetchData("POST", "api/artist_follower/getFollower", {}).then(res => {
             console.log("res", res);
+            console.log("length", res.data.length);
+            setFollwerListLength(res.data.length);
             setFollwerList(res.data);
         });
     };
@@ -140,7 +143,7 @@ const PageFollowers = () => {
     };
     return (
         <div>
-            <Title levle={4}>Followers</Title>
+            <Title levle={4}>Followers ({followerListLength})</Title>
             {userdata.role != "Artist" && (
                 <Row>
                     <Col xs={24} sm={24} md={24} lg={4} xl={4}></Col>
