@@ -7,12 +7,7 @@ use Illuminate\Http\Request;
 
 class PassportController extends Controller
 {
-    /**
-     * Handles Registration Request
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
+
     public function register(Request $request)
     {
         $this->validate($request, [
@@ -34,12 +29,7 @@ class PassportController extends Controller
         return response()->json(['token' => $token], 200);
     }
 
-    /**
-     * Handles Login Request
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
+
     public function login(Request $request)
     {
         $credentials = [
@@ -55,11 +45,6 @@ class PassportController extends Controller
         }
     }
 
-    /**
-     * Returns Authenticated User Details
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function details()
     {
         return response()->json(['user' => auth()->user()], 200);

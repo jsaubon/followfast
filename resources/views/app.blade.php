@@ -54,7 +54,7 @@
     <div id="app">
 
     </div>
-    <script src="{{ asset('js/admin/app.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/admin/app.js') }}"></script>
 </body>
 
 </html>
