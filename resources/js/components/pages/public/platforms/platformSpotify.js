@@ -57,8 +57,10 @@ const PlatformSpotify = props => {
                     }
                 );
             } else {
-                console.log("from followfast", artistInfo);
-                // followArtist(artistInfo);
+                if (!hash.access_token) {
+                    console.log("from followfast", artistInfo);
+                    // followArtist(artistInfo);
+                }
             }
         } else {
             goToSpotifyLogin();
