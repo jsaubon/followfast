@@ -54,7 +54,7 @@ const PlatformSpotify = props => {
                     if (res.success) {
                         let _artistInfo = res.data;
                         console.log("from ff", _artistInfo);
-                        // followArtist(_artistInfo);
+                        followArtist(_artistInfo);
                     } else {
                         message.error("Artist not found");
                     }
@@ -62,7 +62,7 @@ const PlatformSpotify = props => {
             } else {
                 if (!hash.access_token) {
                     console.log("from followfast", artistInfo);
-                    // followArtist(artistInfo);
+                    followArtist(artistInfo);
                 } else {
                     window.location.href =
                         window.location.origin +
