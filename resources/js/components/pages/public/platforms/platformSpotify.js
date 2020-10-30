@@ -42,8 +42,9 @@ const PlatformSpotify = props => {
         if (spotify_token) {
             console.log(props.location.search);
             let spotify_id = props.location.search;
-            localStorage.spotify_id = spotify_id;
+
             if (spotify_id) {
+                localStorage.spotify_id = spotify_id;
                 spotify_id = spotify_id.replace("?spotify_id=", "");
                 fetchData("GET", "api/artist?spotify_id=" + spotify_id).then(
                     res => {
@@ -69,6 +70,10 @@ const PlatformSpotify = props => {
                 }
             }
         } else {
+            let spotify_id = props.location.search;
+            if (spotify_id) {
+                localStorage.spotify_id = spotify_id;
+            }
             goToSpotifyLogin();
         }
         return () => {};
