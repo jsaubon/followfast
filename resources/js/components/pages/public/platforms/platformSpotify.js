@@ -63,7 +63,9 @@ const PlatformSpotify = props => {
                     // followArtist(artistInfo);
                 } else {
                     window.location.href =
-                        window.location.origin + localStorage.spotify_id;
+                        window.location.origin +
+                        "/platform/spotify" +
+                        localStorage.spotify_id;
                 }
             }
         } else {
