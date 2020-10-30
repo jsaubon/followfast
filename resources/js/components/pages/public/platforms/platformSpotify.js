@@ -42,6 +42,7 @@ const PlatformSpotify = props => {
         if (spotify_token) {
             console.log(props.location.search);
             let spotify_id = props.location.search;
+            localStorage.spotify_id = spotify_id;
             if (spotify_id) {
                 spotify_id = spotify_id.replace("?spotify_id=", "");
                 fetchData("GET", "api/artist?spotify_id=" + spotify_id).then(
@@ -60,6 +61,9 @@ const PlatformSpotify = props => {
                 if (!hash.access_token) {
                     console.log("from followfast", artistInfo);
                     // followArtist(artistInfo);
+                } else {
+                    window.location.href =
+                        window.location.origin + localStorage.spotify_id;
                 }
             }
         } else {
