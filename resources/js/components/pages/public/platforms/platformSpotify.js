@@ -64,10 +64,15 @@ const PlatformSpotify = props => {
                     console.log("from followfast", artistInfo);
                     followArtist(artistInfo);
                 } else {
-                    window.location.href =
-                        window.location.origin +
-                        "/platform/spotify" +
-                        localStorage.spotify_id;
+                    if (artistInfo) {
+                        console.log("from followfast", artistInfo);
+                        followArtist(artistInfo);
+                    } else {
+                        window.location.href =
+                            window.location.origin +
+                            "/platform/spotify" +
+                            localStorage.spotify_id;
+                    }
                 }
             }
         } else {
