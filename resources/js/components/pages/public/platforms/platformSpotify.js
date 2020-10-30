@@ -46,18 +46,19 @@ const PlatformSpotify = props => {
             if (spotify_id) {
                 localStorage.spotify_id = spotify_id;
                 spotify_id = spotify_id.replace("?spotify_id=", "");
-                fetchData("GET", "api/artist?spotify_id=" + spotify_id).then(
-                    res => {
-                        // console.log(res);
-                        if (res.success) {
-                            let _artistInfo = res.data;
-                            console.log("from ff", _artistInfo);
-                            // followArtist(_artistInfo);
-                        } else {
-                            message.error("Artist not found");
-                        }
+                fetchData(
+                    "GET",
+                    "api/artist_follow?spotify_id=" + spotify_id
+                ).then(res => {
+                    // console.log(res);
+                    if (res.success) {
+                        let _artistInfo = res.data;
+                        console.log("from ff", _artistInfo);
+                        // followArtist(_artistInfo);
+                    } else {
+                        message.error("Artist not found");
                     }
-                );
+                });
             } else {
                 if (!hash.access_token) {
                     console.log("from followfast", artistInfo);

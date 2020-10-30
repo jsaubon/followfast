@@ -23,6 +23,7 @@ Route::get('artist/song/{song}', 'ArtistController@getBySong');
 Route::get('artist/public/{id}', 'ArtistController@show');
 Route::post('artist_follower/follow', 'ArtistFollowerController@follow');
 Route::post('artist_album_like/like', 'ArtistAlbumLikeController@store');
+Route::get('artist_follow', 'ArtistController@index');
 
 Route::middleware('auth:api')->group(function () {
     // Route::get('user', 'PassportController@details');
