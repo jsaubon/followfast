@@ -49,14 +49,16 @@ const PlatformSpotify = props => {
                         // console.log(res);
                         if (res.success) {
                             let _artistInfo = res.data;
-                            followArtist(_artistInfo);
+                            console.log("from ff", _artistInfo);
+                            // followArtist(_artistInfo);
                         } else {
                             message.error("Artist not found");
                         }
                     }
                 );
             } else {
-                followArtist(artistInfo);
+                console.log("from followfast", artistInfo);
+                // followArtist(artistInfo);
             }
         } else {
             goToSpotifyLogin();
