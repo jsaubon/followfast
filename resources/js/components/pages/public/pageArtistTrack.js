@@ -139,7 +139,7 @@ const PageArtistTrack = ({ match }) => {
                 fbq("trackCustom", "liked", { id: track_name });
                 console.log("FB PIXEL WORKING");
                 window.location.href =
-                "https://open.spotify.com/track/" + track_id;
+                    "https://open.spotify.com/track/" + track_id;
             });
         });
     };

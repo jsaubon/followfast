@@ -8,6 +8,8 @@ import PageArtists from "../pages/private/pageArtists/pageArtists";
 import PageFollowers from "../pages/private/pageFollowers/pageFollowers";
 import PageArtistProfile from "../pages/private/pageArtists/pageArtistProfile";
 
+import TestApi from "../pages/public/platforms/platformAppleMusic";
+
 const LayoutContent = () => {
     const { Content } = Layout;
     let userdata = JSON.parse(localStorage.userdata);
@@ -37,6 +39,8 @@ const LayoutContent = () => {
                             path="/followers"
                             component={PageFollowers}
                         />
+
+                        <Route exact path="/testApi" component={TestApi} />
                         <Route path="/" exact>
                             <Redirect to="/artists" />
                         </Route>

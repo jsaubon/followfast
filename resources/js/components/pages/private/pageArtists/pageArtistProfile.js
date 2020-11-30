@@ -62,6 +62,7 @@ const PageArtistProfile = ({ match, history, location }) => {
     };
 
     useEffect(() => {
+        console.log(location);
         if (location.artist) {
             setArtistInfo(location.artist);
             if (localStorage.spotify_token) {
