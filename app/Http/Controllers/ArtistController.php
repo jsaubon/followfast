@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Artist;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\File;
 class ArtistController extends Controller
 {
     /**
@@ -214,4 +214,9 @@ class ArtistController extends Controller
             ], 500);
         }
     }
+
+
+
+  
+    
 }
