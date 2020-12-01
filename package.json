@@ -26,6 +26,7 @@
     },
     "dependencies": {
         "@ant-design/icons": "^4.2.1",
+        "@yujinakayama/apple-music": "^0.4.0",
         "antd": "^4.4.2",
         "crypto-js": "^4.0.0",
         "file-system": "^2.2.2",
