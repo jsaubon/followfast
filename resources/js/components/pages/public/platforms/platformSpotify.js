@@ -3,6 +3,7 @@ import { Col, message, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import SpotifyWebApi from "spotify-web-api-js";
 import { fetchData } from "../../../../axios";
+
 export const authEndpoint = "https://accounts.spotify.com/authorize";
 const artistInfo = localStorage.artist ? JSON.parse(localStorage.artist) : "";
 const clientId = "09f5bed2a09e492e93979f2a45b90d39";

@@ -22,7 +22,8 @@ import {
     Avatar,
     Tooltip,
     message,
-    notification
+    notification,
+    Spin
 } from "antd";
 import ButtonGroup from "antd/lib/button/button-group";
 import Text from "antd/lib/typography/Text";
@@ -37,12 +38,17 @@ import { copyToClipboard } from "./copyToClipboard";
 import { Tab } from "bootstrap";
 import TabSpotifyAlbums from "./tabsSpotify/tabSpotifyAlbums";
 import TabSpotifyTracks from "./tabsSpotify/tabSpotifyTracks";
+
+import TabAppleMusicAlbums from "./tabsAppleMusic/tabAppleMusicAlbums";
+import TabAppleMusicTracks from "./tabsAppleMusic/tabAppleMusicTracks";
 import CardFollowers from "./cardFollowers";
 import CardLikes from "./cardLikes";
+import jwt from "jsonwebtoken";
 export const authEndpoint = "https://accounts.spotify.com/authorize";
 const artistInfo = localStorage.artist ? JSON.parse(localStorage.artist) : "";
 const clientId = "09f5bed2a09e492e93979f2a45b90d39";
 const redirectUri = `${window.location.origin}/platform/spotify/callback`;
+
 const scopes = [
     // "user-follow-read",
     "user-follow-modify",
@@ -62,6 +68,7 @@ const PageArtistProfile = ({ match, history, location }) => {
     };
 
     useEffect(() => {
+        // console.log(location);
         if (location.artist) {
             setArtistInfo(location.artist);
             if (localStorage.spotify_token) {
@@ -76,14 +83,14 @@ const PageArtistProfile = ({ match, history, location }) => {
     const getArtist = () => {
         fetchData("GET", "api/artist/" + match.params.id).then(res => {
             setArtistInfo(res.data);
-            console.log("the data", res.data);
+            // console.log("the data", res.data);
             if (localStorage.spotify_token) {
                 getSpotifyAlbums(res.data);
             }
         });
     };
     useEffect(() => {
-        console.log(artistInfo);
+        // console.log(artistInfo);
         if (artistInfo) {
             // console.log(artistInfo.artist.artist_account.spotify_id);
             // var spotifyApi = new SpotifyWebApi();
@@ -92,6 +99,7 @@ const PageArtistProfile = ({ match, history, location }) => {
             //     .then(res => {
             //         console.log(res);
             //     });
+            AppleMusic(artistInfo);
         }
 
         return () => {};
@@ -117,7 +125,7 @@ const PageArtistProfile = ({ match, history, location }) => {
             `api/artist_album_like/${artistInfo.artist.id}?search=${e.target.value}`
         ).then(res => {
             if (res.success) {
-                console.log(res);
+                // console.log(res);
                 setArtistInfo({
                     ...artistInfo,
                     artist: {
@@ -130,7 +138,7 @@ const PageArtistProfile = ({ match, history, location }) => {
     };
 
     function tabCallback(key) {
-        console.log(key);
+        // console.log(key);
     }
 
     const loginToSpotify = () => {
@@ -141,7 +149,6 @@ const PageArtistProfile = ({ match, history, location }) => {
     };
     const [spotifyAlbums, setSpotifyAlbums] = useState([]);
     const getSpotifyAlbums = artistInfo => {
-        console.log("wew", artistInfo.artist.artist_account.spotify_id);
         var spotifyApi = new SpotifyWebApi();
         spotifyApi.setAccessToken(localStorage.spotify_token);
         spotifyApi
@@ -149,7 +156,6 @@ const PageArtistProfile = ({ match, history, location }) => {
                 limit: 50
             })
             .then(res => {
-                // console.log(res.items);
                 setSpotifyAlbums(res.items);
                 getSpotifyTracks(res.items);
             })
@@ -203,10 +209,80 @@ const PageArtistProfile = ({ match, history, location }) => {
         setMergeTrack(mergeTrack.concat(a));
     }, [allTracks]);
 
+    //Apple Music
+    const [appleMusicAlbum, setAppleMusicAlbum] = useState([]);
+    const [appleMusicTracks, setAppleMusicTracks] = useState([]);
+    const [appleMusicTracksFinal, setAppleMusicTracksFinal] = useState([]);
+    const AppleMusic = artistInfo => {
+        const privateKey =
+            "-----BEGIN PRIVATE KEY-----MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgt5U1A+ebr9lw6ybNtEpmKfmJAYbGtdzYior0YPEeMGygCgYIKoZIzj0DAQehRANCAAROB6LvV5kFNjpqdzDrvlCfOuz+y2+bx1xJggmxRVMnfWgBDcre705XqPSEKSFexO0y3WIKFpXTwvI1Nw48J6yu-----END PRIVATE KEY-----";
+        const apiKeyId = "7PMQ8639C7";
+        const issuerId = "N4WD3T47J4";
+        let now = Math.round(new Date().getTime() / 1000);
+        let nowPlus20 = now + 1199; // 1200 === 20 minutes
+        let payload = {
+            iss: issuerId,
+            exp: nowPlus20,
+            aud: "appstoreconnect-v1"
+        };
+
+        let signOptions = {
+            algorithm: "ES256", // you must use this algorythm, not jsonwebtoken's default
+            header: {
+                alg: "ES256",
+                kid: apiKeyId,
+                typ: "JWT"
+            }
+        };
+
+        let token = jwt.sign(payload, privateKey, signOptions);
+
+        axios
+            .get(
+                "https://api.music.apple.com/v1/catalog/us/artists/" +
+                    artistInfo.artist.artist_account.apple_id +
+                    "/albums",
+                {
+                    headers: {
+                        Accept: "application/json",
+                        Authorization: "Bearer " + token
+                    }
+                }
+            )
+            .then(res => {
+                var albums = res.data.data;
+                setAppleMusicAlbum(albums);
+                albums.forEach(element => {
+                    axios
+                        .get(
+                            "https://api.music.apple.com/v1/catalog/us/albums/" +
+                                element.id +
+                                "/tracks",
+                            {
+                                headers: {
+                                    Accept: "application/json",
+                                    Authorization: "Bearer " + token
+                                }
+                            }
+                        )
+                        .then(res1 => {
+                            setAppleMusicTracks(res1.data.data);
+                        });
+                });
+            });
+    };
+
+    useEffect(() => {
+        setAppleMusicTracksFinal(
+            appleMusicTracksFinal.concat(appleMusicTracks)
+        );
+    }, [appleMusicTracks]);
+
     return (
         <>
+            {console.log(appleMusicTracksFinal)}
             <Title levle={4}>Artist Profile</Title>
-            {console.log("allTrack", mergeTrack)}
+
             <Button
                 type="primary"
                 onClick={e => history.push("/artists")}
@@ -369,7 +445,43 @@ const PageArtistProfile = ({ match, history, location }) => {
                                         )}
                                     </Tabs.TabPane>
                                     <Tabs.TabPane tab="Apple Music" key="2">
-                                        Content of Tab Pane 2
+                                        <Tabs defaultActiveKey="tab_apple_music_1">
+                                            <Tabs.TabPane
+                                                tab="Albums"
+                                                key="tab_apple_music_1"
+                                            >
+                                                {appleMusicAlbum.length != 0 ? (
+                                                    <TabAppleMusicAlbums
+                                                        appleMusicAlbum={
+                                                            appleMusicAlbum
+                                                        }
+                                                        artistInfo={artistInfo}
+                                                    />
+                                                ) : (
+                                                    <Spin />
+                                                )}
+                                            </Tabs.TabPane>
+                                            <Tabs.TabPane
+                                                tab="Tracks"
+                                                key="tab_apple_music_2"
+                                            >
+                                                <Title level={4}>
+                                                    {appleMusicTracksFinal.length !=
+                                                    0 ? (
+                                                        <TabAppleMusicTracks
+                                                            appleMusicTracksFinal={
+                                                                appleMusicTracksFinal
+                                                            }
+                                                            artistInfo={
+                                                                artistInfo
+                                                            }
+                                                        />
+                                                    ) : (
+                                                        <Spin />
+                                                    )}
+                                                </Title>
+                                            </Tabs.TabPane>
+                                        </Tabs>
                                     </Tabs.TabPane>
                                     <Tabs.TabPane tab="iTunes" key="3">
                                         Content of Tab Pane 3

@@ -37,6 +37,7 @@ const LayoutContent = () => {
                             path="/followers"
                             component={PageFollowers}
                         />
+
                         <Route path="/" exact>
                             <Redirect to="/artists" />
                         </Route>

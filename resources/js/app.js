@@ -11,6 +11,7 @@ import StateProvider from "./Provider";
 import Login from "./components/pages/public/login";
 import PageArtist from "./components/pages/public/pageArtist";
 import PlatformSpotify from "./components/pages/public/platforms/platformSpotify";
+import PlatformAppleMusic from "./components/pages/public/platforms/platformAppleMusic";
 import PageArtistAlbum from "./components/pages/public/pageArtistAlbum";
 import PageArtistTrack from "./components/pages/public/pageArtistTrack";
 import PlatformSpotifyCallback from "./components/pages/public/platforms/platformSpotifyCallback";
@@ -45,12 +46,18 @@ const App = () => {
                         exact
                         component={PlatformSpotify}
                     />
+
+                    <Route
+                        path="/platform/applemusic"
+                        name="Apple Music"
+                        exact
+                        component={PlatformAppleMusic}
+                    />
                     <Route
                         exact
                         path="/platform/spotify/callback"
                         component={PlatformSpotifyCallback}
                     />
-
                     <Route
                         path="/artist/:id/album/:album"
                         name="Artist Album"
